@@ -14,7 +14,6 @@
 
 .logInForm {
   display: flex;
-  width: 15%;
   flex-direction: column;
   margin: 100px auto 0;
   /* border: 1px solid rgba(8, 8, 8, 0.151); */
@@ -22,6 +21,7 @@
 
 .emailInput,
 .pwInput {
+  /* width: 100%; */
   font-size: 30px;
 }
 

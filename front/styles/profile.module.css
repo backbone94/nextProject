@@ -1,6 +1,46 @@
 .profileContainer {
   min-height: 736px;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+}
+
+.imageContainer {
+  text-align: center;
+  font-size: 128px;
+  /* border: 1px solid red; */
+}
+
+.fileInput {
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.image {
+  cursor: pointer;
+  /* border: 1px solid red; */
+}
+
+.defaultImage {
+  text-align: center;
+}
+
+.nickNameInputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 20px auto;
+  /* border: 1px solid red; */
+}
+
+.nickNameLabel {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.introduce {
+  font-weight: 800;
+  width: 70%;
+  margin: 0 auto 5px;
 }

@@ -23,6 +23,8 @@ const initialState: User = {
   name: "",
   email: "",
   password: "",
+  profile: "",
+  nickName: "",
 };
 
 export const userReducer = createSlice({
@@ -30,9 +32,13 @@ export const userReducer = createSlice({
   initialState: { ...initialState, error: "" },
   reducers: {
     logOut: (state) => {
-      state.name = "";
-      state.email = "";
-      state.password = "";
+      // state.name = "";
+      // state.email = "";
+      // state.password = "";
+      // state.profile = "";
+      // state.nickName = "";
+      message.success("로그아웃 하였습니다.");
+      return { ...initialState, error: "" };
     },
   },
   extraReducers: (builder) => {
@@ -43,10 +49,11 @@ export const userReducer = createSlice({
           message.warning(payload.error);
         } else {
           //존재하지 않는 아이디이면
-          state.email = payload.email;
-          state.name = payload.name;
-          state.password = payload.password;
-          message.success("회원가입을 완료하였습니다.");
+          message.success("회원가입 하였습니다.");
+          return {
+            ...state,
+            ...payload,
+          };
         }
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
@@ -54,10 +61,11 @@ export const userReducer = createSlice({
           // 아이디 또는 비밀번호가 틀리면
           message.warning(payload.error);
         } else {
-          state.email = payload.email;
-          state.name = payload.name;
-          state.password = payload.password;
           message.success("로그인 하였습니다.");
+          return {
+            ...state,
+            ...payload,
+          };
         }
       });
   },

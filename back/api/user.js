@@ -24,8 +24,19 @@ router.get("/", async (req, res) => {
 // POST api/user
 router.post("/", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    console.log("name: ", name, " email: ", email, " password: ", password);
+    const { name, email, password, nickName, profile } = req.body;
+    console.log(
+      "name: ",
+      name,
+      " email: ",
+      email,
+      " password: ",
+      password,
+      "nickName: ",
+      nickName,
+      "profile: ",
+      profile
+    );
 
     const result = await User.findOne({ email });
     if (result !== null) {
@@ -36,6 +47,8 @@ router.post("/", async (req, res) => {
         name,
         email,
         password,
+        nickName,
+        profile,
       });
       console.log("계정 생성 result: ", newAccount);
       res.json(newAccount);
