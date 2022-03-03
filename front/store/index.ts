@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
+import { verifyReducer } from "./reducers/verifyReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {
@@ -17,11 +18,12 @@ const persistConfig = {
   // localStorage에 저장합니다.
   storage,
   // userReducer의 state를 localStorage에 저장
-  whitelist: ["user"],
+  whitelist: ["user", "verify"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer.reducer,
+  verify: verifyReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

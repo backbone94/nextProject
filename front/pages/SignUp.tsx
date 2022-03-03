@@ -10,8 +10,8 @@ import SettingImage from "../components/SettingImage";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.user.email);
+  const num = useSelector((state: RootState) => state.verify.verifyNum);
   const [user, setUser] = useState<User>({
-    name: "",
     email: "",
     password: "",
     profile: "",
@@ -19,6 +19,7 @@ const SignUp = () => {
     introduce: "",
   });
   const [img, setImg] = useState();
+  const [verifyNum, setVerifyNum] = useState();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -35,7 +36,10 @@ const SignUp = () => {
       message.error("비밀번호가 일치하지 않습니다.");
       return;
     }
-
+    if (Number(verifyNum) !== num) {
+      message.error("인증 번호가 일치하지 않습니다.");
+      return;
+    }
     // 회원가입
     dispatch(addUser(user));
   };
@@ -48,7 +52,13 @@ const SignUp = () => {
       {/* 이미지 설정 */}
       <SettingImage img={img} setImg={setImg} />
 
-      <SignUpForm user={user} setUser={setUser} submit={submit} />
+      <SignUpForm
+        verifyNum={verifyNum}
+        setVerifyNum={setVerifyNum}
+        user={user}
+        setUser={setUser}
+        submit={submit}
+      />
     </>
   );
 };

@@ -1,16 +1,33 @@
 import styles from "../styles/signUp.module.css";
 import { Form, Input, Button, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { emailVerify } from "../store/reducers/userReducer";
+import { emailVerify } from "../store/reducers/verifyReducer";
+import { useEffect, useState } from "react";
 
-const SignUpForm = ({ user, setUser, submit }) => {
+const SignUpForm = ({ verifyNum, setVerifyNum, user, setUser, submit }) => {
   const dispatch = useDispatch();
+  const [verify, setVerify] = useState(false);
+  let timeOut = null;
+
+  useEffect(() => {
+    return function cleanup() {
+      clearTimeout(timeOut);
+    };
+  }, []);
 
   // 이메일 인증
   const emailVerification = () => {
-    if (!user.email) message.error("이메일을 적으세요.");
-    dispatch(emailVerify(user.email));
+    if (user.email === "") message.error("이메일을 적으세요!");
+    else {
+      dispatch(emailVerify(user.email));
+      setVerify(true);
+      timeOut = setTimeout(() => {
+        setVerify(false);
+        setVerifyNum();
+        message.error("시간이 초과 되었습니다.");
+      }, 180000);
+    }
   };
 
   return (
@@ -21,35 +38,6 @@ const SignUpForm = ({ user, setUser, submit }) => {
         initialValues={{ remember: true }}
         onFinish={submit}
       >
-        <Form.Item
-          name="email"
-          rules={[{ required: true, message: "이메일을 적으세요." }]}
-        >
-          <div style={{ display: "flex" }}>
-            <Input
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-              className={styles.emailInput}
-              prefix={<UserOutlined />}
-              placeholder="이메일"
-            />
-            <Button onClick={emailVerification}>인증</Button>
-          </div>
-        </Form.Item>
-
-        <Form.Item
-          name="name"
-          rules={[{ required: true, message: "이름을 적으세요." }]}
-        >
-          <Input
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-            className={styles.nameInput}
-            prefix={<UserOutlined />}
-            placeholder="이름"
-          />
-        </Form.Item>
-
         <Form.Item
           name="nickName"
           rules={[{ required: true, message: "닉네임을 적으세요." }]}
@@ -88,6 +76,33 @@ const SignUpForm = ({ user, setUser, submit }) => {
             placeholder="비밀번호 확인"
           />
         </Form.Item>
+
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: "이메일을 적으세요." }]}
+        >
+          <div style={{ display: "flex" }}>
+            <Input
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              className={styles.emailInput}
+              prefix={<MailOutlined />}
+              placeholder="이메일"
+            />
+            <Button style={{ height: "auto" }} onClick={emailVerification}>
+              인증
+            </Button>
+          </div>
+        </Form.Item>
+
+        <Input
+          type="number"
+          value={verifyNum}
+          onChange={(e) => setVerifyNum(e.target.value)}
+          disabled={!verify}
+          placeholder="인증번호 입력"
+          className={styles.verifyInput}
+        />
 
         <Form.Item className={styles.submitButton}>
           <Button type="primary" htmlType="submit">

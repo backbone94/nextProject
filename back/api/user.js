@@ -44,10 +44,8 @@ router.post("/logIn", async (req, res) => {
 // POST api/user/signUp 회원가입
 router.post("/signUp", async (req, res) => {
   try {
-    const { name, email, password, nickName, profile, introduce } = req.body;
+    const { email, password, nickName, profile } = req.body;
     console.log(
-      "name: ",
-      name,
       " email: ",
       email,
       " password: ",
@@ -64,7 +62,6 @@ router.post("/signUp", async (req, res) => {
         return res.json({ error: "이미 존재하는 이메일입니다." });
       } else {
         const newUser = new User({
-          name,
           email,
           password,
           nickName,
@@ -97,7 +94,7 @@ router.post("/signUp", async (req, res) => {
   }
 });
 
-// 이미지 & 닉네임 or 자기소개 변경 PUT api/user/changeNickOrIntro
+// 이미지 & 닉네임 & 자기소개 변경 PUT api/user/changeNickOrIntro
 router.put("/changeNickOrIntro", auth, async (req, res) => {
   try {
     const { email, profile, nickName, introduce } = req.body.user;

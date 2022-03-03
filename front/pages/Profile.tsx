@@ -44,10 +44,6 @@ export default function Profile() {
     );
   };
 
-  console.log("content", content);
-  console.log("introduce", user.introduce);
-  console.log(content === user.introduce);
-
   // 비밀번호 변경
   const changePW = () => {
     bcrypt.compare(prevPw, user.password).then((isMatch) => {

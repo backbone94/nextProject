@@ -52,10 +52,11 @@ router.post("/", async (req, res) => {
         if (err) console.log(err);
         else {
           console.log("사용자에게 보낸 이메일 결과: ", res.response);
-          res.json(number);
         }
+        smtpTransport.close();
       });
     }
+    res.json(number);
   } catch (e) {
     console.log(e);
   }

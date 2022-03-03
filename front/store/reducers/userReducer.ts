@@ -3,16 +3,6 @@ import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 
-// 이메일 인증
-export const emailVerify = createAsyncThunk(
-  "email/emailVerify",
-  async (email: String) => {
-    const res = await axios.post("http://localhost:7000/api/email", { email });
-    console.log("이메일 인증 결과: ", res.data);
-    return res.data;
-  }
-);
-
 // 회원가입
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   const res = await axios.post("http://localhost:7000/api/user/signUp", user);
@@ -77,7 +67,6 @@ export const changePw = createAsyncThunk(
 );
 
 const initialState: User = {
-  name: "",
   email: "",
   password: "",
   profile: "",
@@ -97,19 +86,6 @@ export const userReducer = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(emailVerify.fulfilled, (state, { payload }) => {
-        if (payload.error) {
-          // 이미 존재하는 아이디이면
-          message.warning(payload.error);
-        } else {
-          //존재하지 않는 아이디이면
-          message.success("인증 하였습니다.");
-          return {
-            ...state,
-            ...payload,
-          };
-        }
-      })
       .addCase(addUser.fulfilled, (state, { payload }) => {
         if (payload.error) {
           // 이미 존재하는 아이디이면
