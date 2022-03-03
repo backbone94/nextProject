@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
   profile: {
     type: String,
   },
+  introduce: {
+    type: String,
+    default: "",
+  },
   registerDate: {
     type: Date,
     default: moment().format("YYYY-MM-DD hh:mm:ss"),

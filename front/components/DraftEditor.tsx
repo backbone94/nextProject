@@ -1,9 +1,11 @@
-import { Editor, EditorState, RichUtils, DraftEditorCommand } from "draft-js";
-// import Editor from '@draft-js-plugins/editor'
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 import "draft-js/dist/Draft.css";
-import { useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import EditorToolbar from "./EditorToolbar";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 export const MyBlock = styled.div`
   .wrapper-class {
@@ -19,30 +21,52 @@ export const MyBlock = styled.div`
   }
 `;
 
-const DraftEditor = () => {
+const DraftEditor = ({ initialState, setContent }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  const handleTogggleClick = (e: React.MouseEvent, inlineStyle: string) => {
-    e.preventDefault();
-    setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-  };
-  const handleBlockClick = (e: React.MouseEvent, blockType: string) => {
-    e.preventDefault();
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
-  };
+  // draft를 html로 변환
+  const editorToHtml = draftToHtml(
+    convertToRaw(editorState.getCurrentContent())
+  );
+
+  useEffect(() => {
+    // html를 draft로 변환
+    const blocksFromHtml = htmlToDraft(initialState);
+    if (blocksFromHtml) {
+      const { contentBlocks, entityMap } = blocksFromHtml;
+      const contentState = ContentState.createFromBlockArray(
+        contentBlocks,
+        entityMap
+      );
+      const result = EditorState.createWithContent(contentState);
+      setEditorState(result);
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  setContent(editorToHtml);
 
   return (
-    <MyBlock>
-      <EditorToolbar
-        handleTogggleClick={handleTogggleClick}
-        handleBlockClick={handleBlockClick}
-      />
-      <Editor
-        placeholder="내용을 작성해주세요."
-        editorState={editorState}
-        onChange={(editorState) => setEditorState(editorState)}
-      />
-    </MyBlock>
+    <>
+      <MyBlock>
+        <Editor
+          toolbar={{
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            link: { inDropdown: true },
+            history: { inDropdown: false },
+          }}
+          toolbarClassName="toolbar-class"
+          editorClassName="editor"
+          wrapperClassName="wrapper-class"
+          placeholder="내용을 작성해주세요."
+          editorState={editorState}
+          onEditorStateChange={(editorState: EditorState) =>
+            setEditorState(editorState)
+          }
+        />
+      </MyBlock>
+    </>
   );
 };
 

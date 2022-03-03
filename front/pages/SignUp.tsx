@@ -6,6 +6,7 @@ import { addUser } from "../store/reducers/userReducer";
 import { useRouter } from "next/router";
 import { RootState } from "../store";
 import { message } from "antd";
+import SettingImage from "../components/SettingImage";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.user.email);
@@ -15,6 +16,7 @@ const SignUp = () => {
     password: "",
     profile: "",
     nickName: "",
+    introduce: "",
   });
   const [img, setImg] = useState();
   const dispatch = useDispatch();
@@ -40,13 +42,10 @@ const SignUp = () => {
 
   return (
     <>
-      <SignUpForm
-        user={user}
-        setUser={setUser}
-        submit={submit}
-        img={img}
-        setImg={setImg}
-      />
+      {/* 이미지 설정 */}
+      <SettingImage img={img} setImg={setImg} />
+
+      <SignUpForm user={user} setUser={setUser} submit={submit} />
     </>
   );
 };

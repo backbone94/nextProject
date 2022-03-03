@@ -1,40 +1,11 @@
 import styles from "../styles/signUp.module.css";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import SettingImage from "./SettingImage";
 
-const SignUpForm = ({ user, setUser, submit, img, setImg }) => {
+const SignUpForm = ({ user, setUser, submit }) => {
   return (
     <div className={styles.signUpContainer}>
       <div className={styles.signUpText}>회원가입</div>
-
-      {/* 이미지 설정 */}
-      <SettingImage img={img} setImg={setImg} />
-      {/* <div className={styles.imageContainer}>
-        <Tooltip title="이미지 변경">
-          <input
-            id="inputId"
-            onChange={(e) => insertImg(e)}
-            accept="image/*"
-            className={styles.fileInput}
-            type="file"
-          />
-          <label htmlFor="inputId">
-            {img ? (
-              <img className={styles.image} src={img} alt="profile" />
-            ) : (
-              <SmileOutlined className={styles.image} />
-            )}
-          </label>
-        </Tooltip>
-      </div>
-      {img ? (
-        <div className={styles.defaultImage}>
-          <Button type="text" onClick={() => setImg("")}>
-            기본 이미지로 설정
-          </Button>
-        </div>
-      ) : null} */}
 
       {/* 회원가입 form */}
       <Form

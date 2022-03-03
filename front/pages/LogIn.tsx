@@ -18,7 +18,6 @@ const LogIn = () => {
 
   // 로그인
   const logIn = async (e: any) => {
-    console.log(e);
     const email = e.email;
     const password = e.password;
     dispatch(getUser({ email, password }));

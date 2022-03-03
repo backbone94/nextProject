@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "../store/index";
 import { PersistGate } from "redux-persist/integration/react";
 import "antd/dist/antd.css";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   return (
@@ -13,7 +14,9 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Top />
-          <Component {...pageProps} />
+          <div className="container">
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </PersistGate>
       </Provider>

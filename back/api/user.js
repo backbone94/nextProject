@@ -1,30 +1,50 @@
 import express from "express";
 import "@babel/polyfill";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import config from "../config/index.js";
+const { JWT_SECRET } = config;
 
 // 몽고 DB 콜렉션
 import User from "../models/user.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET api/user
-router.get("/", async (req, res) => {
-  const { email, password } = req.query;
+// GET api/user/logIn 로그인
+router.post("/logIn", async (req, res) => {
+  const { email, password } = req.body;
   console.log("email: ", email, " password: ", password);
 
-  const result = await User.findOne({ email, password });
+  const result = await User.findOne({ email });
   if (result === null) {
     console.log("아이디 또는 비밀번호를 확인하세요.");
     res.json({ error: "아이디 또는 비밀번호를 확인하세요." });
   } else {
-    console.log("계정 불러오기 result: ", result);
-    res.json(result);
+    bcrypt.compare(password, result.password).then((isMatch) => {
+      if (!isMatch)
+        return res.json({ error: "아이디 또는 비밀번호를 확인하세요." });
+      jwt.sign(
+        { email: result.email },
+        JWT_SECRET,
+        { expiresIn: "2h" },
+        (err, token) => {
+          if (err) throw err;
+          console.log("계정 불러오기 result: ", result);
+          res.json({
+            token,
+            result,
+          });
+        }
+      );
+    });
   }
 });
 
-// POST api/user
-router.post("/", async (req, res) => {
+// POST api/user/signUp 회원가입
+router.post("/signUp", async (req, res) => {
   try {
-    const { name, email, password, nickName, profile } = req.body;
+    const { name, email, password, nickName, profile, introduce } = req.body;
     console.log(
       "name: ",
       name,
@@ -35,24 +55,46 @@ router.post("/", async (req, res) => {
       "nickName: ",
       nickName,
       "profile: ",
-      profile
+      profile,
+      "introduce: ",
+      introduce
     );
 
-    const result = await User.findOne({ email });
-    if (result !== null) {
-      console.log("이미 존재하는 아이디입니다.");
-      res.json({ error: "이미 존재하는 아이디입니다." });
-    } else {
-      const newAccount = await User.create({
-        name,
-        email,
-        password,
-        nickName,
-        profile,
-      });
-      console.log("계정 생성 result: ", newAccount);
-      res.json(newAccount);
-    }
+    User.findOne({ email }).then((user) => {
+      if (user) {
+        console.log("이미 존재하는 아이디입니다.");
+        return res.json({ error: "이미 존재하는 아이디입니다." });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password,
+          nickName,
+          profile,
+          introduce,
+        });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser.save().then((user) => {
+              jwt.sign(
+                { email: user.email },
+                JWT_SECRET,
+                { expiresIn: "2h" },
+                (err, token) => {
+                  if (err) throw err;
+                  res.json({
+                    token,
+                    newUser,
+                  });
+                }
+              );
+            });
+          });
+        });
+      }
+    });
   } catch (e) {
     console.log(e);
   }
@@ -90,7 +132,7 @@ router.delete("/", async (req, res) => {
     console.log("req.body: ", req.body);
 
     const result = await User.deleteOne({
-      _id: req.body._id,
+      email: req.body.email,
     });
     console.log("계정 삭제 result: ", result);
     res.json(result);
@@ -98,5 +140,8 @@ router.delete("/", async (req, res) => {
     console.log(e);
   }
 });
+
+// 토큰 확인 POST api/user/token
+router.get("/token", auth);
 
 export default router;
