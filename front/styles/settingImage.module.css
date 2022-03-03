@@ -12,6 +12,7 @@
 
 .image {
   cursor: pointer;
+  border-radius: 10%;
   /* border: 1px solid red; */
 }
 

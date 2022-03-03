@@ -55,15 +55,13 @@ router.post("/signUp", async (req, res) => {
       "nickName: ",
       nickName,
       "profile: ",
-      profile,
-      "introduce: ",
-      introduce
+      profile
     );
 
     User.findOne({ email }).then((user) => {
       if (user) {
-        console.log("이미 존재하는 아이디입니다.");
-        return res.json({ error: "이미 존재하는 아이디입니다." });
+        console.log("이미 존재하는 이메일입니다.");
+        return res.json({ error: "이미 존재하는 이메일입니다." });
       } else {
         const newUser = new User({
           name,
@@ -71,7 +69,6 @@ router.post("/signUp", async (req, res) => {
           password,
           nickName,
           profile,
-          introduce,
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -100,27 +97,48 @@ router.post("/signUp", async (req, res) => {
   }
 });
 
-// POST api/user/updateAccount
-router.post("/updateAccount", async (req, res) => {
+// 이미지 & 닉네임 or 자기소개 변경 PUT api/user/changeNickOrIntro
+router.put("/changeNickOrIntro", auth, async (req, res) => {
   try {
-    const { name, avatar, newPw, id } = req.body;
+    const { email, profile, nickName, introduce } = req.body.user;
     console.log(
-      "name: ",
-      name,
-      " id: ",
-      id,
-      " avatar: ",
-      avatar,
-      " newPw: ",
-      newPw
+      "email: ",
+      email,
+      "profile",
+      profile,
+      "nickName: ",
+      nickName,
+      " introduce: ",
+      introduce
     );
-    const result = await User.findOneAndUpdate(
-      { id },
-      { name, avatar, pw: newPw },
+    const updateUser = await User.findOneAndUpdate(
+      { email },
+      { profile, nickName, introduce },
       { new: true }
     );
-    console.log("계정 수정 result: ", result);
-    res.json(result);
+    console.log("닉네임 or 자기소개 수정 result: ", updateUser);
+    res.json(updateUser);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// 비밀번호 변경 api/user/changePw
+router.put("/changePw", auth, async (req, res) => {
+  try {
+    const { email, password } = req.body.user;
+    User.findOne({ email }).then((user) => {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) throw err;
+          user.password = hash;
+          user.save().then((user) => {
+            console.log("비밀번호 수정 result: ", user);
+            res.json(user);
+          });
+        });
+      });
+    });
   } catch (e) {
     console.log(e);
   }

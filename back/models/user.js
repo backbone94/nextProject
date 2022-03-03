@@ -28,7 +28,6 @@ const UserSchema = new mongoose.Schema({
   },
   introduce: {
     type: String,
-    default: "",
   },
   registerDate: {
     type: Date,

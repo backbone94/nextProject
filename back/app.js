@@ -6,6 +6,7 @@ import hpp from "hpp";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import emailRoutes from "./api/email.js";
 import userRoutes from "./api/user.js";
 import imageRoutes from "./api/image.js";
 
@@ -31,6 +32,7 @@ mongoose
 
 // api routes
 app.get("/");
+app.use("/api/email", emailRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/image", imageRoutes);
 

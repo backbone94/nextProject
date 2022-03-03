@@ -2,11 +2,13 @@ import { Tooltip, Button } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import styles from "../styles/settingImage.module.css";
 import requestImg from "../util/requestImg";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 
 const SettingImage = ({ img, setImg }) => {
+  const imageRef = useRef();
+
   // 이미지 url 요청
-  const insertImg = async (e: ChangeEvent<HTMLInputElement>) => {
+  const insertImg = async (e: any) => {
     const url = await requestImg(e);
     setImg(url);
   };
@@ -16,6 +18,7 @@ const SettingImage = ({ img, setImg }) => {
       <div className={styles.imageContainer}>
         <Tooltip title="이미지 변경">
           <input
+            ref={imageRef}
             id="inputId"
             onChange={(e) => insertImg(e)}
             accept="image/*"
@@ -24,7 +27,13 @@ const SettingImage = ({ img, setImg }) => {
           />
           <label htmlFor="inputId">
             {img ? (
-              <img className={styles.image} src={img} alt="profile" />
+              <img
+                width="128"
+                height="128"
+                className={styles.image}
+                src={img}
+                alt="profile"
+              />
             ) : (
               <SmileOutlined className={styles.image} />
             )}

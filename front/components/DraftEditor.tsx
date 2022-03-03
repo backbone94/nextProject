@@ -9,9 +9,7 @@ import htmlToDraft from "html-to-draftjs";
 
 export const MyBlock = styled.div`
   .wrapper-class {
-    width: 70%;
     margin: 0 auto;
-    margin-bottom: 4rem;
   }
   .editor {
     height: 150px !important;

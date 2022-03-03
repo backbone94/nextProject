@@ -1,12 +1,20 @@
 import styles from "../styles/signUp.module.css";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { emailVerify } from "../store/reducers/userReducer";
 
 const SignUpForm = ({ user, setUser, submit }) => {
+  const dispatch = useDispatch();
+
+  // 이메일 인증
+  const emailVerification = () => {
+    if (!user.email) message.error("이메일을 적으세요.");
+    dispatch(emailVerify(user.email));
+  };
+
   return (
     <div className={styles.signUpContainer}>
-      <div className={styles.signUpText}>회원가입</div>
-
       {/* 회원가입 form */}
       <Form
         className={styles.signUpForm}
@@ -17,13 +25,16 @@ const SignUpForm = ({ user, setUser, submit }) => {
           name="email"
           rules={[{ required: true, message: "이메일을 적으세요." }]}
         >
-          <Input
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            className={styles.emailInput}
-            prefix={<UserOutlined />}
-            placeholder="이메일"
-          />
+          <div style={{ display: "flex" }}>
+            <Input
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              className={styles.emailInput}
+              prefix={<UserOutlined />}
+              placeholder="이메일"
+            />
+            <Button onClick={emailVerification}>인증</Button>
+          </div>
         </Form.Item>
 
         <Form.Item

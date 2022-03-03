@@ -42,6 +42,9 @@ const SignUp = () => {
 
   return (
     <>
+      <div style={{ fontSize: 50, textAlign: "center", marginTop: 30 }}>
+        회원가입
+      </div>
       {/* 이미지 설정 */}
       <SettingImage img={img} setImg={setImg} />
 

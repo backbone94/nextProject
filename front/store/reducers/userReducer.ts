@@ -3,6 +3,16 @@ import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 
+// 이메일 인증
+export const emailVerify = createAsyncThunk(
+  "email/emailVerify",
+  async (email: String) => {
+    const res = await axios.post("http://localhost:7000/api/email", { email });
+    console.log("이메일 인증 결과: ", res.data);
+    return res.data;
+  }
+);
+
 // 회원가입
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   const res = await axios.post("http://localhost:7000/api/user/signUp", user);
@@ -31,20 +41,37 @@ export const withdrawal = createAsyncThunk(
       data: { email },
     });
     console.log("회원 삭제 결과: ", res.data);
-    // api.dispatch(userReducer.actions.logOut());
     return res.data;
   }
 );
 
-// 토큰 확인
-export const tokenCheck = createAsyncThunk(
-  "user/tokenCheck",
-  async (_, api) => {
+// 이미지 & 닉네임 & 자기소개 변경
+export const changeNickOrIntro = createAsyncThunk(
+  "user/changeNickOrIntro",
+  async (user: Object) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.get("http://localhost:7000/api/user/token", {
+    const res = await axios.put(
+      "http://localhost:7000/api/user/changeNickOrIntro",
+      {
+        user,
+        headers: { Authorization: token },
+      }
+    );
+    console.log("이미지 or 닉네임 or 자기소개 변경 결과: ", res.data);
+    return res.data;
+  }
+);
+
+// 비밀번호 변경
+export const changePw = createAsyncThunk(
+  "user/changePw",
+  async (user: Object) => {
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.put("http://localhost:7000/api/user/changePw", {
+      user,
       headers: { Authorization: token },
     });
-    console.log("토큰 결과: ", res.data);
+    console.log("비밀번호 변경 결과: ", res.data);
     return res.data;
   }
 );
@@ -64,17 +91,25 @@ export const userReducer = createSlice({
   reducers: {
     // 로그 아웃
     logOut: (state) => {
-      // state.name = "";
-      // state.email = "";
-      // state.password = "";
-      // state.profile = "";
-      // state.nickName = "";
       message.success("로그아웃 하였습니다.");
       return { ...initialState, error: "" };
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(emailVerify.fulfilled, (state, { payload }) => {
+        if (payload.error) {
+          // 이미 존재하는 아이디이면
+          message.warning(payload.error);
+        } else {
+          //존재하지 않는 아이디이면
+          message.success("인증 하였습니다.");
+          return {
+            ...state,
+            ...payload,
+          };
+        }
+      })
       .addCase(addUser.fulfilled, (state, { payload }) => {
         if (payload.error) {
           // 이미 존재하는 아이디이면
@@ -104,9 +139,29 @@ export const userReducer = createSlice({
         message.success("회원을 탈퇴하였습니다.");
         return { ...initialState, error: "" };
       })
-      .addCase(tokenCheck.fulfilled, (state, { payload }) => {
-        message.success("로그인을 다시 하십시오.");
-        return { ...initialState, error: "" };
+      .addCase(changeNickOrIntro.fulfilled, (state, { payload }) => {
+        if (payload.error) {
+          message.error(payload.error);
+          return { ...initialState, error: "" };
+        } else {
+          message.success("수정하였습니다.");
+          return {
+            ...state,
+            ...payload,
+          };
+        }
+      })
+      .addCase(changePw.fulfilled, (state, { payload }) => {
+        if (payload.error) {
+          message.error(payload.error);
+          return { ...initialState, error: "" };
+        } else {
+          message.success("수정하였습니다.");
+          return {
+            ...state,
+            ...payload,
+          };
+        }
       });
   },
 });

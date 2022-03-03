@@ -1,8 +1,6 @@
 .profileContainer {
-  /* min-height: 736px; */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+  width: 600px;
+  margin: auto;
 }
 
 .imageContainer {
@@ -26,21 +24,37 @@
   text-align: center;
 }
 
-.nickNameInputContainer {
+.nickAndIntroContainer {
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid rgba(128, 128, 128, 0.205);
+}
+
+.nickNameInputContainer,
+.passwordInputContainer {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  margin: 20px auto;
   /* border: 1px solid red; */
 }
 
-.nickNameLabel {
+.passwordInputContainer {
+  padding: 10px;
+  margin-bottom: 50px;
+  border: 1px solid rgba(128, 128, 128, 0.205);
+}
+
+.nickNameLabel,
+.passwordLabel {
   font-weight: 800;
   margin-bottom: 5px;
 }
 
 .introduce {
   font-weight: 800;
-  width: 70%;
-  margin: 0 auto 5px;
+  margin: 20px auto 5px;
+}
+.submitButton {
+  text-align: center;
+  margin: 30px 0;
+  /* border: 1px solid red; */
 }
