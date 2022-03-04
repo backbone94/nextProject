@@ -1,2 +1,29 @@
 .homeContainer {
+  display: flex;
+  flex-direction: column;
+  height: 736px;
+  /* border: 1px solid red; */
+}
+
+.searchInputContainer {
+  margin: 100px auto 0;
+  width: 500px;
+  /* border: 1px solid red; */
+}
+
+.gifContainer {
+  text-align: center;
+  margin-bottom: 30px;
+  /* border: 1px solid red; */
+}
+
+.gif {
+  width: 200px;
+  border-radius: 5%;
+}
+
+.searchInput {
+  height: 40px;
+  text-align: center;
+  font-size: 20px;
 }

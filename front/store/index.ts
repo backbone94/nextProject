@@ -1,3 +1,4 @@
+import { searchReducer } from "./reducers/searchReducer";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 import { verifyReducer } from "./reducers/verifyReducer";
@@ -18,12 +19,13 @@ const persistConfig = {
   // localStorage에 저장합니다.
   storage,
   // userReducer의 state를 localStorage에 저장
-  whitelist: ["user", "verify"],
+  whitelist: ["user", "verify", "search"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer.reducer,
   verify: verifyReducer.reducer,
+  search: searchReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

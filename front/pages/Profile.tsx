@@ -59,7 +59,7 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
-      <div style={{ fontSize: 50, textAlign: "center", marginTop: 30 }}>
+      <div style={{ fontSize: 30, textAlign: "center", marginTop: 30 }}>
         프로필
       </div>
       {/* 이미지 & 닉네임 & 자기소개 변경 */}
@@ -84,7 +84,9 @@ export default function Profile() {
         <div className={styles.submitButton}>
           <Button
             disabled={
-              content !== user.introduce || nickName !== user.nickName
+              img !== user.profile ||
+              content !== user.introduce ||
+              nickName !== user.nickName
                 ? false
                 : true
             }

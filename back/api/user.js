@@ -94,8 +94,8 @@ router.post("/signUp", async (req, res) => {
   }
 });
 
-// 이미지 & 닉네임 & 자기소개 변경 PUT api/user/changeNickOrIntro
-router.put("/changeNickOrIntro", auth, async (req, res) => {
+// 이미지 & 닉네임 & 자기소개 변경 POST api/user/changeNickOrIntro
+router.post("/changeNickOrIntro", auth, async (req, res) => {
   try {
     const { email, profile, nickName, introduce } = req.body.user;
     console.log(
@@ -157,6 +157,8 @@ router.delete("/", async (req, res) => {
 });
 
 // 토큰 확인 POST api/user/token
-router.get("/token", auth);
+router.post("/token", auth, (req, res) => {
+  res.json({ msg: "토큰 유효" });
+});
 
 export default router;

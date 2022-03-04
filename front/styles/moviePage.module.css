@@ -1,0 +1,39 @@
+.moviePageContainer {
+  min-height: 736px;
+  display: flex;
+}
+
+.movieInfoContainer {
+  display: flex;
+  margin: 30px auto auto;
+  padding: 10px;
+  border: 1px solid rgba(145, 186, 202, 0.315);
+}
+
+.movieInfo {
+  padding: 0 20px 20px;
+  width: 700px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+.released {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.director,
+.actors,
+.genre {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.text {
+  color: gray;
+  margin-bottom: 10px;
+}

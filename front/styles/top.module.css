@@ -1,16 +1,20 @@
 .headerContainer {
   height: 100px;
   display: flex;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.103);
 }
 
-.homeIcon,
-.LogIn,
-.LogOut,
-.addUserIcon,
-.profileIcon {
-  margin-right: 30px;
-  font-size: 50px;
+.home {
+  margin: auto;
+  font-size: 40px;
   cursor: pointer;
+  /* border: 1px solid red; */
+}
+
+.userContainer {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  transform: translate(-50%, -50%);
   /* border: 1px solid red; */
 }

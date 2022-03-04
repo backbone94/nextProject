@@ -46,7 +46,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div style={{ fontSize: 50, textAlign: "center", marginTop: 30 }}>
+      <div style={{ fontSize: 30, textAlign: "center", marginTop: 100 }}>
         회원가입
       </div>
       {/* 이미지 설정 */}

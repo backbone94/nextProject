@@ -1,7 +1,6 @@
 .signUpContainer {
   display: flex;
   flex-direction: column;
-  /* min-height: 736px; */
   /* border: 1px solid blue; */
 }
 

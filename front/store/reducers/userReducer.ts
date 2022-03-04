@@ -3,6 +3,16 @@ import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 
+// 토큰 유효성 검증
+export const tokenCheck = createAsyncThunk("user/verify", async () => {
+  let token = localStorage.getItem("token") || "";
+  const res = await axios.post("http://localhost:7000/api/user/token", {
+    headers: { Authorization: token },
+  });
+  console.log("토큰 유효성 결과: ", res.data);
+  return res.data;
+});
+
 // 회원가입
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   const res = await axios.post("http://localhost:7000/api/user/signUp", user);
@@ -40,7 +50,7 @@ export const changeNickOrIntro = createAsyncThunk(
   "user/changeNickOrIntro",
   async (user: Object) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.put(
+    const res = await axios.post(
       "http://localhost:7000/api/user/changeNickOrIntro",
       {
         user,
@@ -86,6 +96,13 @@ export const userReducer = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(tokenCheck.fulfilled, (state, { payload }) => {
+        if (payload.error) {
+          // 토큰이 유효하지 않은 경우
+          message.error("로그아웃 하였습니다.");
+          return { ...initialState, error: "" };
+        }
+      })
       .addCase(addUser.fulfilled, (state, { payload }) => {
         if (payload.error) {
           // 이미 존재하는 아이디이면
