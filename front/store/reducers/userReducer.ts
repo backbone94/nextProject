@@ -76,12 +76,27 @@ export const changePw = createAsyncThunk(
   }
 );
 
+// 좋아요 누른 유저 정보 업데이트
+export const userLike = createAsyncThunk(
+  "user/userLike",
+  async (userLike: Object) => {
+    const res = await axios.post(
+      "http://localhost:7000/api/user/userLike",
+      userLike
+    );
+    console.log("유저 좋아요 업데이트 결과: ", res.data);
+    return res.data;
+  }
+);
+
 const initialState: User = {
+  _id: "",
   email: "",
   password: "",
   profile: "",
   nickName: "",
   introduce: "",
+  likeComments: [],
 };
 
 export const userReducer = createSlice({
@@ -155,6 +170,9 @@ export const userReducer = createSlice({
             ...payload,
           };
         }
+      })
+      .addCase(userLike.fulfilled, (state, { payload }) => {
+        state.likeComments = payload.likeComments;
       });
   },
 });

@@ -34,6 +34,7 @@ export default function Home() {
           <img className={styles.gif} src="/totoro.gif" alt="totoro" />
         </div>
         <Input
+          autoFocus
           onKeyUp={enterMovieTitle}
           placeholder="영화 제목을 입력하세요."
           className={styles.searchInput}

@@ -1,0 +1,66 @@
+import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { message } from "antd";
+import lodash from "lodash";
+
+// 리뷰 불러오기
+export const getCommentList = createAsyncThunk(
+  "comment/getCommentList",
+  async (movie: string | string[]) => {
+    const res = await axios.get(`http://localhost:7000/api/comment`, {
+      params: { movie: movie },
+    });
+    console.log("리뷰 불러오기 결과: ", res.data);
+
+    return res.data;
+  }
+);
+
+// 리뷰 쓰기
+export const addComment = createAsyncThunk(
+  "comment/addComment",
+  async (comment: Object) => {
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.post(`http://localhost:7000/api/comment`, {
+      comment,
+      headers: { Authorization: token },
+    });
+    console.log("리뷰 쓰기 결과: ", res.data);
+    return res.data;
+  }
+);
+
+// 좋아요 수 변경
+export const commentLike = createAsyncThunk(
+  "comment/commentLike",
+  async (like: Object) => {
+    const res = await axios.post(
+      `http://localhost:7000/api/comment/commentLike`,
+      like
+    );
+    console.log("좋아요 수 변경 결과: ", res.data);
+    return res.data;
+  }
+);
+
+const initialState = {
+  commentList: [],
+  error: false,
+};
+
+export const commentReducer = createSlice({
+  name: "comment",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCommentList.fulfilled, (state, { payload }) => {
+        state.commentList = payload;
+      })
+      .addCase(addComment.fulfilled, (state, { payload }) => {
+        if (payload.error) {
+          state.error = payload.error;
+        } else state.commentList.push(payload);
+      });
+  },
+});

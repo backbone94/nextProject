@@ -1,11 +1,14 @@
 .moviePageContainer {
   min-height: 736px;
   display: flex;
+  flex-direction: column;
+  width: 800px;
+  margin: 50px auto 0;
+  /* border: 1px solid red; */
 }
 
 .movieInfoContainer {
   display: flex;
-  margin: 30px auto auto;
   padding: 10px;
   border: 1px solid rgba(145, 186, 202, 0.315);
 }

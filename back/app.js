@@ -5,11 +5,11 @@ import config from "./config/index.js";
 import hpp from "hpp";
 import helmet from "helmet";
 import morgan from "morgan";
-import auth from "./middleware/auth.js";
 
 import emailRoutes from "./api/email.js";
 import userRoutes from "./api/user.js";
 import imageRoutes from "./api/image.js";
+import commentRoutes from "./api/comment.js";
 
 const { PORT, MONGO_URI } = config;
 
@@ -36,6 +36,7 @@ app.get("/");
 app.use("/api/email", emailRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/image", imageRoutes);
+app.use("/api/comment", commentRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);

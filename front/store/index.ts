@@ -12,6 +12,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { commentReducer } from "./reducers/commentReducer";
 
 // 새로고침해도 store의 state 값 저장하기 위한 라이브러리
 const persistConfig = {
@@ -19,13 +20,14 @@ const persistConfig = {
   // localStorage에 저장합니다.
   storage,
   // userReducer의 state를 localStorage에 저장
-  whitelist: ["user", "verify", "search"],
+  whitelist: ["user", "verify", "search", "comment"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer.reducer,
   verify: verifyReducer.reducer,
   search: searchReducer.reducer,
+  comment: commentReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

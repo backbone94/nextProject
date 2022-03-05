@@ -1,0 +1,79 @@
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 100px 0;
+  /* border: 1px solid rgba(145, 186, 202, 0.315); */
+}
+
+.commentRegister {
+  background-color: rgba(58, 55, 55, 0.26);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.star {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.commentInput {
+  display: flex;
+  height: 40px;
+}
+
+.commentList {
+  /* border: 1px solid red; */
+}
+
+.commentCard {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  /* box-shadow: 1px 1px 1px 1px gray; */
+  border: 1px solid rgba(145, 186, 202, 0.315);
+  /* border: 1px solid red; */
+}
+
+.imageNickContainer {
+  display: flex;
+  margin: 10px;
+  /* border: 1px solid red; */
+}
+
+.image {
+  margin-right: 15px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.date {
+  font-size: 12px;
+}
+
+.commentStarContainer {
+  margin: 10px;
+  /* border: 1px solid red; */
+}
+
+.commentStar {
+  font-size: 12px;
+  /* border: 1px solid red; */
+}
+
+.rateText {
+  font-weight: 700;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.like {
+  font-size: 12px;
+  border-radius: 15px;
+  margin-right: 10px;
+  /* height: 25px; */
+}
+
+.likeIcon {
+  margin-right: 5px;
+}

@@ -12,11 +12,13 @@ const SignUp = () => {
   const email = useSelector((state: RootState) => state.user.email);
   const num = useSelector((state: RootState) => state.verify.verifyNum);
   const [user, setUser] = useState<User>({
+    _id: "",
     email: "",
     password: "",
     profile: "",
     nickName: "",
     introduce: "",
+    likeComments: [],
   });
   const [img, setImg] = useState();
   const [verifyNum, setVerifyNum] = useState();
@@ -40,6 +42,8 @@ const SignUp = () => {
       message.error("인증 번호가 일치하지 않습니다.");
       return;
     }
+
+    console.log("user: ", user);
     // 회원가입
     dispatch(addUser(user));
   };

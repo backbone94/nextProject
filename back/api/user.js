@@ -11,12 +11,12 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET api/user/logIn 로그인
+// POST api/user/logIn 로그인
 router.post("/logIn", async (req, res) => {
   const { email, password } = req.body;
   console.log("email: ", email, " password: ", password);
 
-  const result = await User.findOne({ email });
+  const result = await User.findOne({ email }).populate("comments");
   if (result === null) {
     console.log("아이디 또는 비밀번호를 확인하세요.");
     res.json({ error: "아이디 또는 비밀번호를 확인하세요." });
@@ -45,16 +45,8 @@ router.post("/logIn", async (req, res) => {
 router.post("/signUp", async (req, res) => {
   try {
     const { email, password, nickName, profile } = req.body;
-    console.log(
-      " email: ",
-      email,
-      " password: ",
-      password,
-      "nickName: ",
-      nickName,
-      "profile: ",
-      profile
-    );
+
+    console.log("profile: ", profile);
 
     User.findOne({ email }).then((user) => {
       if (user) {
@@ -98,21 +90,16 @@ router.post("/signUp", async (req, res) => {
 router.post("/changeNickOrIntro", auth, async (req, res) => {
   try {
     const { email, profile, nickName, introduce } = req.body.user;
-    console.log(
-      "email: ",
-      email,
-      "profile",
-      profile,
-      "nickName: ",
-      nickName,
-      " introduce: ",
-      introduce
-    );
     const updateUser = await User.findOneAndUpdate(
       { email },
-      { profile, nickName, introduce },
+      {
+        profile,
+        nickName,
+        introduce,
+      },
       { new: true }
-    );
+    ).populate("comments");
+
     console.log("닉네임 or 자기소개 수정 result: ", updateUser);
     res.json(updateUser);
   } catch (e) {
@@ -136,6 +123,37 @@ router.put("/changePw", auth, async (req, res) => {
         });
       });
     });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// 좋아요 누른 유저 정보 변경 api/user/userLike
+router.post("/userLike", async (req, res) => {
+  try {
+    const { liked, email, _id } = req.body;
+    console.log("liked", liked, "email: ", email, "_id: ", _id);
+
+    let updateUser;
+    // 이미 좋아요를 눌렀었다면
+    if (liked) {
+      updateUser = await User.findOneAndUpdate(
+        { email },
+        { $pull: { likeComments: _id } },
+        { new: true }
+      );
+    }
+    // 좋아요를 누른 적이 없다면
+    else {
+      updateUser = await User.findOneAndUpdate(
+        { email },
+        { $push: { likeComments: _id } },
+        { new: true }
+      );
+    }
+
+    console.log("좋아요 누른 유저 정보 결과", updateUser);
+    res.json(updateUser);
   } catch (e) {
     console.log(e);
   }

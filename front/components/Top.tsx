@@ -17,8 +17,9 @@ export default function Top() {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const defaultImage = "/defaultImage.png";
 
-  // 로그아웃
+  // 로그아웃s
   const logOut = () => {
     dispatch(userReducer.actions.logOut());
     router.push("/");

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import styles from "../styles/moviePage.module.css";
 import Loading from "../components/Loading";
+import Comment from "../components/Comment";
 
 const MoviePage = () => {
   const movie = useSelector((state: RootState) => state.search);
@@ -27,6 +28,8 @@ const MoviePage = () => {
           <div className={styles.text}>{movie.Genre}</div>
         </div>
       </div>
+      {/* 한줄 리뷰 */}
+      <Comment />
     </div>
   ) : (
     // 404 페이지
