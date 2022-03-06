@@ -65,7 +65,13 @@ export default function Profile() {
       {/* 이미지 & 닉네임 & 자기소개 변경 */}
       <div className={styles.nickAndIntroContainer}>
         {/* 이미지 */}
-        <SettingImage img={img} setImg={setImg} />
+        <SettingImage
+          isSignUp={false}
+          user={null}
+          setUser={null}
+          img={img}
+          setImg={setImg}
+        />
         {/* 닉네임 */}
         <div className={styles.nickNameInputContainer}>
           <div className={styles.nickNameLabel}>닉네임</div>
@@ -80,7 +86,7 @@ export default function Profile() {
         <div className={styles.introduce}>자기소개</div>
         <DraftEditor initialState={content} setContent={setContent} />
 
-        {/* 수정 */}
+        {/* 저장하기 버튼 */}
         <div className={styles.submitButton}>
           <Button
             disabled={
@@ -125,7 +131,7 @@ export default function Profile() {
           type="password"
           placeholder="새 비밀번호 확인"
         />
-        {/* 수정 */}
+        {/* 저장하기 버튼 */}
         <div className={styles.submitButton}>
           <Button
             onClick={changePW}

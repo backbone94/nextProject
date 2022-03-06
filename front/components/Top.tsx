@@ -4,25 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Button, Menu, Dropdown } from "antd";
 import { userReducer } from "../store/reducers/userReducer";
-import {
-  HomeOutlined,
-  LoginOutlined,
-  UserAddOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
 import Link from "next/link";
 
 export default function Top() {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const defaultImage = "/defaultImage.png";
 
-  // 로그아웃s
+  // 로그아웃
   const logOut = () => {
     dispatch(userReducer.actions.logOut());
-    router.push("/");
+    // router.push("/");
   };
 
   const move = (route: string) => {

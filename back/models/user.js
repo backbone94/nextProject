@@ -27,12 +27,6 @@ const UserSchema = new mongoose.Schema({
       ref: "comment",
     },
   ],
-  dislikeComments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "comment",
-    },
-  ],
   role: {
     type: String,
     default: "user",

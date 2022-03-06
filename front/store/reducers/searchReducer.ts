@@ -7,7 +7,7 @@ export const searchMovie = createAsyncThunk(
   "search/title",
   async (title: String) => {
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}&page=2`
     );
     console.log("영화 검색 결과: ", res.data);
     return res.data;
@@ -33,7 +33,7 @@ export const searchReducer = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchMovie.pending, (state, { payload }) => {
-        return { ...state, loading: true };
+        state.loading = true;
       })
       .addCase(searchMovie.fulfilled, (state, { payload }) => {
         if (payload.Error) return { ...initialState };

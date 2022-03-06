@@ -3,6 +3,7 @@ import { RootState } from "../store";
 import styles from "../styles/moviePage.module.css";
 import Loading from "../components/Loading";
 import Comment from "../components/Comment";
+import { useEffect } from "react";
 
 const MoviePage = () => {
   const movie = useSelector((state: RootState) => state.search);
@@ -14,22 +15,24 @@ const MoviePage = () => {
   ) : title ? (
     // 영화 상세 정보 페이지
     <div className={styles.moviePageContainer}>
-      <div className={styles.movieInfoContainer}>
-        <img className={styles.poster} src={`${movie.Poster}`} alt="이미지" />
-        <div className={styles.movieInfo}>
-          <div className={styles.title}>{movie.Title}</div>
-          <div className={styles.released}>{movie.Released}</div>
-          <div className={styles.text}>{movie.Plot}</div>
-          <div className={styles.director}>Director</div>
-          <div className={styles.text}>{movie.Director}</div>
-          <div className={styles.actors}>Actors</div>
-          <div className={styles.text}>{movie.Actors}</div>
-          <div className={styles.genre}>Genre</div>
-          <div className={styles.text}>{movie.Genre}</div>
+      <div className={styles.movieInfoAndComment}>
+        <div className={styles.movieInfoContainer}>
+          <img className={styles.poster} src={`${movie.Poster}`} alt="이미지" />
+          <div className={styles.movieInfo}>
+            <div className={styles.title}>{movie.Title}</div>
+            <div className={styles.released}>{movie.Released}</div>
+            <div className={styles.text}>{movie.Plot}</div>
+            <div className={styles.director}>Director</div>
+            <div className={styles.text}>{movie.Director}</div>
+            <div className={styles.actors}>Actors</div>
+            <div className={styles.text}>{movie.Actors}</div>
+            <div className={styles.genre}>Genre</div>
+            <div className={styles.text}>{movie.Genre}</div>
+          </div>
         </div>
+        {/* 한줄 리뷰 */}
+        <Comment />
       </div>
-      {/* 한줄 리뷰 */}
-      <Comment />
     </div>
   ) : (
     // 404 페이지

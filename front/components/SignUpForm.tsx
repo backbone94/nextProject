@@ -5,10 +5,11 @@ import { useDispatch } from "react-redux";
 import { emailVerify } from "../store/reducers/verifyReducer";
 import { useEffect, useState } from "react";
 
+let timeOut = null;
+
 const SignUpForm = ({ verifyNum, setVerifyNum, user, setUser, submit }) => {
   const dispatch = useDispatch();
   const [verify, setVerify] = useState(false);
-  let timeOut = null;
 
   useEffect(() => {
     return function cleanup() {

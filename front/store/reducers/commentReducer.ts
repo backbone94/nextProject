@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
-import lodash from "lodash";
+import { Comment } from "../type/comment";
 
 // 리뷰 불러오기
 export const getCommentList = createAsyncThunk(
@@ -43,6 +43,21 @@ export const commentLike = createAsyncThunk(
   }
 );
 
+// 리뷰 삭제
+export const removeComment = createAsyncThunk(
+  "comment/removeComment",
+  async (comment: Comment) => {
+    const res = await axios.delete(
+      `http://localhost:7000/api/comment/removeComment`,
+      {
+        data: { comment: comment },
+      }
+    );
+    console.log("리뷰 삭제 결과: ", res.data);
+    return comment._id;
+  }
+);
+
 const initialState = {
   commentList: [],
   error: false,
@@ -61,6 +76,9 @@ export const commentReducer = createSlice({
         if (payload.error) {
           state.error = payload.error;
         } else state.commentList.push(payload);
+      })
+      .addCase(removeComment.fulfilled, (state, { payload }) => {
+        state.commentList = state.commentList.filter((c) => c._id !== payload);
       });
   },
 });

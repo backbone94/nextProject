@@ -1,12 +1,15 @@
 import { useState } from "react";
 import SignUpForm from "../components/SignUpForm";
-import { User } from "../store/user";
+import { User } from "../store/type/user";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../store/reducers/userReducer";
 import { useRouter } from "next/router";
 import { RootState } from "../store";
 import { message } from "antd";
 import SettingImage from "../components/SettingImage";
+
+const defaultImage =
+  "https://my-blog1684.s3.ap-northeast-2.amazonaws.com/next/defaultImage.png";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.user.email);
@@ -20,7 +23,7 @@ const SignUp = () => {
     introduce: "",
     likeComments: [],
   });
-  const [img, setImg] = useState();
+  const [img, setImg] = useState("");
   const [verifyNum, setVerifyNum] = useState();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -30,7 +33,6 @@ const SignUp = () => {
 
   // 회원가입 클릭
   const submit = (e: any) => {
-    setUser({ ...user, profile: img });
     const password: string = e.password;
     const passwordCheck: string = e.passwordCheck;
 
@@ -42,8 +44,6 @@ const SignUp = () => {
       message.error("인증 번호가 일치하지 않습니다.");
       return;
     }
-
-    console.log("user: ", user);
     // 회원가입
     dispatch(addUser(user));
   };
@@ -54,7 +54,13 @@ const SignUp = () => {
         회원가입
       </div>
       {/* 이미지 설정 */}
-      <SettingImage img={img} setImg={setImg} />
+      <SettingImage
+        isSignUp={true}
+        user={user}
+        setUser={setUser}
+        img={img}
+        setImg={setImg}
+      />
 
       <SignUpForm
         verifyNum={verifyNum}

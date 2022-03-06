@@ -46,8 +46,6 @@ router.post("/signUp", async (req, res) => {
   try {
     const { email, password, nickName, profile } = req.body;
 
-    console.log("profile: ", profile);
-
     User.findOne({ email }).then((user) => {
       if (user) {
         console.log("이미 존재하는 이메일입니다.");
@@ -70,6 +68,7 @@ router.post("/signUp", async (req, res) => {
                 { expiresIn: "2h" },
                 (err, token) => {
                   if (err) throw err;
+                  console.log("회원가입 결과: ", newUser);
                   res.json({
                     token,
                     newUser,
@@ -129,9 +128,9 @@ router.put("/changePw", auth, async (req, res) => {
 });
 
 // 좋아요 누른 유저 정보 변경 api/user/userLike
-router.post("/userLike", async (req, res) => {
+router.post("/userLike", auth, async (req, res) => {
   try {
-    const { liked, email, _id } = req.body;
+    const { liked, email, _id } = req.body.userLike;
     console.log("liked", liked, "email: ", email, "_id: ", _id);
 
     let updateUser;

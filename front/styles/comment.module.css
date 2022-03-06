@@ -1,8 +1,10 @@
 .commentContainer {
   display: flex;
   flex-direction: column;
-  margin: 100px 0;
-  /* border: 1px solid rgba(145, 186, 202, 0.315); */
+  margin-left: 10px;
+  height: 700px;
+  flex: 1;
+  /* border: 1px solid red; */
 }
 
 .commentRegister {
@@ -22,16 +24,14 @@
 }
 
 .commentList {
+  overflow: auto;
   /* border: 1px solid red; */
 }
 
 .commentCard {
-  margin: 10px 0;
-  padding: 10px;
+  margin: 10px;
   border-radius: 5px;
-  /* box-shadow: 1px 1px 1px 1px gray; */
   border: 1px solid rgba(145, 186, 202, 0.315);
-  /* border: 1px solid red; */
 }
 
 .imageNickContainer {
@@ -49,6 +49,12 @@
 
 .date {
   font-size: 12px;
+}
+
+.deleteComment {
+  color: gray;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .commentStarContainer {
@@ -76,4 +82,14 @@
 
 .likeIcon {
   margin-right: 5px;
+}
+
+.myComment {
+  font-size: 11px;
+  padding: 2px;
+  background-color: rgba(0, 128, 0, 0.075);
+  border: 1px solid green;
+  border-radius: 10px;
+  margin-right: 5px;
+  color: green;
 }

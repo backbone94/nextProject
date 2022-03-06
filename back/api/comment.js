@@ -9,6 +9,7 @@ const router = express.Router();
 
 import "@babel/polyfill";
 import User from "../models/user.js";
+import moment from "moment";
 
 export default router;
 
@@ -24,6 +25,7 @@ router.post("/", auth, async (req, res) => {
       user,
       nickName,
       profile,
+      registerDate: moment(),
     });
     newComment = await newComment.populate("user");
 
@@ -44,6 +46,7 @@ router.post("/commentLike", async (req, res) => {
   try {
     console.log(req.body);
     const { _id, like } = req.body;
+    console.log("like: ", like);
 
     // comment의 좋아요 수 변경
     const updateComment = await Comment.findOneAndUpdate(
@@ -64,14 +67,34 @@ router.get("/", async (req, res) => {
   try {
     const { movie } = req.query;
     console.log(movie);
-    // const commentList = await Comment.find({ movie });
-    // res.json(commentList);
     await Comment.find({ movie })
       .populate("user")
       .then((commentList) => {
         console.log(commentList);
         res.json(commentList);
       });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// 리뷰 삭제 DELETE api/comment/
+router.delete("/removeComment", async (req, res) => {
+  try {
+    const { comment } = req.body;
+    console.log(comment);
+
+    // 리뷰를 삭제하기 전에,
+    // 리뷰에 좋아요 누른 사람의 likeComment 배열에서 먼저 삭제
+    await User.updateMany({}, { $pull: { likeComments: comment._id } });
+
+    // 리뷰 삭제
+    const deleteComment = await Comment.deleteOne({
+      _id: comment._id,
+    }).populate("user");
+
+    console.log("리뷰 삭제 결과: ", deleteComment);
+    res.json(deleteComment);
   } catch (e) {
     console.log(e);
   }

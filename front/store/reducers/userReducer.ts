@@ -1,4 +1,4 @@
-import { User } from "../user";
+import { User } from "../type/user";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
@@ -15,6 +15,7 @@ export const tokenCheck = createAsyncThunk("user/verify", async () => {
 
 // 회원가입
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
+  if (!user.profile) user.profile = "/defaultImage.png";
   const res = await axios.post("http://localhost:7000/api/user/signUp", user);
   console.log("회원가입 결과: ", res.data);
   if (res.data.token) localStorage.setItem("token", res.data.token);
@@ -80,10 +81,11 @@ export const changePw = createAsyncThunk(
 export const userLike = createAsyncThunk(
   "user/userLike",
   async (userLike: Object) => {
-    const res = await axios.post(
-      "http://localhost:7000/api/user/userLike",
-      userLike
-    );
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.post("http://localhost:7000/api/user/userLike", {
+      userLike,
+      headers: { Authorization: token },
+    });
     console.log("유저 좋아요 업데이트 결과: ", res.data);
     return res.data;
   }

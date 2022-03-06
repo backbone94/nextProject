@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { store, persistor } from "../store/index";
 import { PersistGate } from "redux-persist/integration/react";
 import "antd/dist/antd.css";
-import { useEffect } from "react";
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   return (
