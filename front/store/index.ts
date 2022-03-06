@@ -1,7 +1,8 @@
-import { searchReducer } from "./reducers/searchReducer";
+import { detailMovieReducer } from "./reducers/detailMovieReducer";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 import { verifyReducer } from "./reducers/verifyReducer";
+import { searchMoviesReducer } from "./reducers/searchMoviesReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {
@@ -26,8 +27,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer.reducer,
   verify: verifyReducer.reducer,
-  search: searchReducer.reducer,
+  detailMovie: detailMovieReducer.reducer,
   comment: commentReducer.reducer,
+  movies: searchMoviesReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

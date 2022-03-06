@@ -1,18 +1,17 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import styles from "../styles/moviePage.module.css";
-import Loading from "../components/Loading";
-import Comment from "../components/Comment";
+import { RootState } from "../../store";
+import styles from "../../styles/moviePage.module.css";
+import Loading from "../../components/Loading";
+import Comment from "../../components/Comment";
 import { useEffect } from "react";
 
 const MoviePage = () => {
-  const movie = useSelector((state: RootState) => state.search);
-  const loading = movie.loading;
-  const title = movie.Title;
+  const movie = useSelector((state: RootState) => state.detailMovie);
+  const { loading, Title } = movie;
 
   return loading ? (
     <Loading />
-  ) : title ? (
+  ) : Title ? (
     // 영화 상세 정보 페이지
     <div className={styles.moviePageContainer}>
       <div className={styles.movieInfoAndComment}>

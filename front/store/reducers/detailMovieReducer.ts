@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 
 // 염화 검색
-export const searchMovie = createAsyncThunk(
-  "search/title",
+export const clickMovie = createAsyncThunk(
+  "detailMovie/title",
   async (title: String) => {
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}&page=2`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}`
     );
-    console.log("영화 검색 결과: ", res.data);
+    console.log("클릭한 영화 결과: ", res.data);
     return res.data;
   }
 );
@@ -26,16 +26,16 @@ const initialState = {
   loading: false,
 };
 
-export const searchReducer = createSlice({
-  name: "search",
+export const detailMovieReducer = createSlice({
+  name: "detailMovie",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(searchMovie.pending, (state, { payload }) => {
+      .addCase(clickMovie.pending, (state, { payload }) => {
         state.loading = true;
       })
-      .addCase(searchMovie.fulfilled, (state, { payload }) => {
+      .addCase(clickMovie.fulfilled, (state, { payload }) => {
         if (payload.Error) return { ...initialState };
         return { ...state, ...payload, loading: false };
       });

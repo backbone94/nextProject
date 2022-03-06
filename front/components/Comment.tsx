@@ -15,7 +15,7 @@ const Comment = () => {
   const { commentList } = comment;
   const router = useRouter();
   const { title } = router.query;
-  const [star, setStar] = useState(3);
+  const [star, setStar] = useState(0);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const Comment = () => {
         })
       );
       setText("");
-      setStar(3);
+      setStar(0);
     }
   };
 

@@ -1,0 +1,58 @@
+.moviesContainer {
+  min-height: 736px;
+  display: flex;
+  flex-direction: column;
+  width: 1300px;
+  white-space: normal;
+  margin: 0 auto;
+  /* border: 1px solid red; */
+}
+
+.searchInputContainer {
+  margin: 70px auto 0;
+  width: 300px;
+  /* border: 1px solid red; */
+}
+
+.searchInput {
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.movies {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin: 70px 0 70px;
+  /* border: 1px solid red; */
+}
+
+.movieCard {
+  cursor: pointer;
+  margin: 10px;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+  width: 235px;
+  height: 405px;
+  border: 1px solid rgba(0, 0, 0, 0.123);
+}
+
+.movieCard:hover {
+  box-shadow: 1px 1px 5px 5px rgba(128, 128, 128, 0.438);
+}
+
+.movieImage {
+  width: 235px;
+  height: 305px;
+}
+
+.movieInfo {
+  padding: 10px;
+  text-align: center;
+  margin: 20px auto;
+  /* border: 1px solid red; */
+}
