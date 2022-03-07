@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { tokenCheck } from "../store/reducers/userReducer";
-import { searchMovies } from "../store/reducers/searchMoviesReducer";
+import { searchFirstPage } from "../store/reducers/searchMoviesReducer";
 import styles from "../styles/home.module.css";
 import { Input } from "antd";
 import { useRouter } from "next/router";
@@ -18,10 +18,10 @@ export default function Home() {
     if (email) dispatch(tokenCheck());
   }, []);
 
-  // 영화 검색 엔터 키
   const enterMovies = (e) => {
     if (e.key === "Enter") {
-      dispatch(searchMovies(movies));
+      // 영화 첫 페이지 검색
+      dispatch(searchFirstPage(movies));
       router.push(`/${movies}`);
     }
   };

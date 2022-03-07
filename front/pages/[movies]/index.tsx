@@ -1,33 +1,55 @@
 import { useRouter } from "next/router";
 import styles from "../../styles/movies.module.css";
-import { Input } from "antd";
+import { Input, BackTop } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import NonPage from "../NonPage";
 import Loading from "../../components/Loading";
-import { searchMovies } from "../../store/reducers/searchMoviesReducer";
+import { searchFirstPage } from "../../store/reducers/searchMoviesReducer";
 import { clickMovie } from "../../store/reducers/detailMovieReducer";
-import infinityScroll from "../../util/infinityScroll";
+import InfinityLoading from "../../components/InfinityLoading";
+import { searchNextPage } from "../../store/reducers/searchMoviesReducer";
+import { useInView } from "react-intersection-observer";
 
 const Movies = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const [ref, inView] = useInView();
   const moviesParam = router.query.movies;
   const [movieTitle, setMovieTitle] = useState(moviesParam);
   const movies = useSelector((state: RootState) => state.movies);
-  const { movieList, error, loading } = movies;
+  const { movieList, error, loading, lastPage, infinityLoading } = movies;
 
+  // page의 값이 변하면 다음 페이지 검색
   useEffect(() => {
-    dispatch(searchMovies({ title: moviesParam, page: 1 }));
+    console.log("현재 page: ", page);
+    if (page !== 1) {
+      dispatch(searchNextPage({ title: moviesParam, page }));
+    }
+  }, [page]);
+
+  // 페이지의 끝 부분에 도달하면 page++
+  useEffect(() => {
+    if (inView && !loading && page !== lastPage) {
+      setPage((page) => page + 1);
+    }
+  }, [inView, loading]);
+
+  // 영화가 검색된 상태에서 새로운 영화를 검색하는 경우
+  // ex) 뒤로 가기
+  useEffect(() => {
+    setPage(1);
     setMovieTitle(moviesParam);
-    window.addEventListener("scroll", () => infinityScroll(moviesParam), true);
+    dispatch(searchFirstPage(moviesParam));
   }, [moviesParam]);
 
   // 영화 검색 엔터 키
   const enterMovies = (e) => {
     if (e.key === "Enter") {
-      dispatch(searchMovies({ title: moviesParam, page: 1 }));
+      setPage(1);
+      dispatch(searchFirstPage(movieTitle));
       router.push(`/${movieTitle}`);
     }
   };
@@ -42,6 +64,11 @@ const Movies = () => {
     <Loading />
   ) : !error ? (
     <div className={styles.moviesContainer}>
+      {/* 위로 가기 버튼 */}
+      <BackTop>
+        <span className={styles.top}>👆</span>
+      </BackTop>
+
       {/* 영화 검색 input */}
       <div className={styles.searchInputContainer}>
         <Input
@@ -59,7 +86,7 @@ const Movies = () => {
           movieList.map((movie) => (
             <div
               onClick={() => detailMovie(movie.Title)}
-              key={movie.imbdID}
+              key={movie.imdbID}
               className={styles.movieCard}
             >
               <img
@@ -74,6 +101,7 @@ const Movies = () => {
             </div>
           ))}
       </div>
+      {infinityLoading ? <InfinityLoading /> : <div ref={ref}></div>}
     </div>
   ) : (
     <NonPage />

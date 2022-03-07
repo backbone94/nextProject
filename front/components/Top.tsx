@@ -41,7 +41,7 @@ export default function Top() {
       {!user.email ? (
         <div className={styles.userContainer}>
           {/* 로그인 버튼 */}
-          <Button onClick={() => move("/LogIn")} className={styles.LogIn}>
+          <Button onClick={() => move("/LogIn")} className={styles.logIn}>
             로그인
           </Button>
 
@@ -55,7 +55,7 @@ export default function Top() {
           </Button>
         </div>
       ) : (
-        <div className={styles.userContainer}>
+        <div className={styles.profileContainer}>
           {/* 프로필 버튼 */}
           <Dropdown overlay={menu} trigger={["click"]}>
             <img
