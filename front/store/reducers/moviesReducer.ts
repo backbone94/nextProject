@@ -4,7 +4,7 @@ import { message } from "antd";
 
 // 영화 첫 페이지 검색
 export const searchFirstPage = createAsyncThunk(
-  "search/firstPage",
+  "movies/firstPage",
   async (title: string | string[]) => {
     const res = await axios.get(
       `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${title}`
@@ -16,7 +16,7 @@ export const searchFirstPage = createAsyncThunk(
 
 // 다음 페이지 검색
 export const searchNextPage = createAsyncThunk(
-  "search/nextPage",
+  "movies/nextPage",
   async (nextPage: { title: string | string[]; page: number }) => {
     const { title, page } = nextPage;
     const res = await axios.get(
@@ -33,12 +33,25 @@ const initialState = {
   loading: false,
   infinityLoading: false,
   lastPage: 0,
+  visitedMovies: [],
 };
 
-export const searchMoviesReducer = createSlice({
-  name: "search",
+export const moviesReducer = createSlice({
+  name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    visit: (state, { payload }) => {
+      // visitedMovies 배열 안에 이미 값이 존재하면 추가 X
+      const isVisited = state.visitedMovies.find((visited) => {
+        if (visited.title === payload.title) return true;
+      });
+      if (isVisited) return;
+      else state.visitedMovies.push(payload);
+    },
+    deleteVisited: (state) => {
+      state.visitedMovies = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       // 첫 페이지 검색 로딩

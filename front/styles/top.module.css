@@ -4,20 +4,74 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.103);
 }
 
-.home {
-  margin: auto;
-  font-size: 40px;
-  cursor: pointer;
-  /* border: 1px solid red; */
+/* 830px 이하까지 */
+@media screen and (max-width: 830px) {
+  .userContainer,
+  .profileContainer {
+    display: none;
+  }
+
+  .hamburgerContainer {
+    position: absolute;
+    font-size: 30px;
+    right: 20px;
+    top: 25px;
+    /* border: 1px solid red; */
+  }
+  .home {
+    margin: auto;
+    font-size: 20px;
+  }
+
+  .openMenu,
+  .closeMenu {
+    display: block;
+    position: absolute;
+    width: 150px;
+    top: 100px;
+    z-index: 1;
+    font-size: 20px;
+    /* padding: 20px; */
+    transition: all 0.3s ease-out;
+    background-color: rgba(255, 255, 255, 0.877);
+    border: 1px solid rgba(0, 0, 0, 0.116);
+  }
+
+  .openMenu {
+    right: 0px;
+  }
+
+  .closeMenu {
+    right: -150px;
+  }
 }
 
-.userContainer,
-.profileContainer {
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
+/* 830px 이상부터 */
+@media screen and (min-width: 830px) {
+  .hamburgerContainer {
+    display: none;
+  }
+  .home {
+    margin: auto;
+    font-size: 40px;
+    cursor: pointer;
+    /* border: 1px solid red; */
+  }
+
+  .openMenu,
+  .closeMenu {
+    display: none;
+  }
+
+  .userContainer,
+  .profileContainer {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    /* border: 1px solid red; */
+  }
 }
 
 .profileContainer {

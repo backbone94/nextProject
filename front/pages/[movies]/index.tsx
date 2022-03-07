@@ -6,11 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import NonPage from "../NonPage";
 import Loading from "../../components/Loading";
-import { searchFirstPage } from "../../store/reducers/searchMoviesReducer";
+import {
+  searchFirstPage,
+  moviesReducer,
+} from "../../store/reducers/moviesReducer";
 import { clickMovie } from "../../store/reducers/detailMovieReducer";
 import InfinityLoading from "../../components/InfinityLoading";
-import { searchNextPage } from "../../store/reducers/searchMoviesReducer";
+import { searchNextPage } from "../../store/reducers/moviesReducer";
 import { useInView } from "react-intersection-observer";
+import VisitedMovies from "../../components/VisitedMovies";
 
 const Movies = () => {
   const router = useRouter();
@@ -20,7 +24,14 @@ const Movies = () => {
   const moviesParam = router.query.movies;
   const [movieTitle, setMovieTitle] = useState(moviesParam);
   const movies = useSelector((state: RootState) => state.movies);
-  const { movieList, error, loading, lastPage, infinityLoading } = movies;
+  const {
+    movieList,
+    error,
+    loading,
+    lastPage,
+    infinityLoading,
+    visitedMovies,
+  } = movies;
 
   // page의 값이 변하면 다음 페이지 검색
   useEffect(() => {
@@ -56,7 +67,8 @@ const Movies = () => {
 
   // 영화 상세 페이지로 이동
   const detailMovie = (title: string) => {
-    dispatch(clickMovie(title));
+    // dispatch(clickMovie(title));
+    dispatch(moviesReducer.actions.visit({ movies: moviesParam, title }));
     router.push(`/${moviesParam}/${title}`);
   };
 
@@ -64,6 +76,9 @@ const Movies = () => {
     <Loading />
   ) : !error ? (
     <div className={styles.moviesContainer}>
+      {/* 최근 클릭한 영화 */}
+      {visitedMovies.length ? <VisitedMovies /> : null}
+
       {/* 위로 가기 버튼 */}
       <BackTop>
         <span className={styles.top}>👆</span>

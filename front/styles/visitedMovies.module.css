@@ -1,0 +1,27 @@
+.visitedMoviesContainer {
+  border: 1px solid rgba(128, 128, 128, 0.473);
+  position: fixed;
+  font-size: 13px;
+  left: 20px;
+  top: 300px;
+  width: 280px;
+  border-radius: 10px;
+  padding-right: 10px;
+}
+
+.deleteButton {
+  margin-left: 15px;
+  color: rgba(128, 128, 128, 0.753);
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: black;
+}
+
+.movie {
+  color: rgba(0, 0, 0, 0.507);
+}
+.movie:hover {
+  color: black;
+}

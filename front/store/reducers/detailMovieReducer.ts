@@ -5,7 +5,7 @@ import { message } from "antd";
 // 염화 검색
 export const clickMovie = createAsyncThunk(
   "detailMovie/title",
-  async (title: String) => {
+  async (title: string | string[]) => {
     const res = await axios.get(
       `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}`
     );

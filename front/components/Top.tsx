@@ -2,9 +2,11 @@ import styles from "../styles/top.module.css";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { Button, Menu, Dropdown } from "antd";
+import { Button, Menu, Dropdown, Drawer } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 import { userReducer } from "../store/reducers/userReducer";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Top() {
   const router = useRouter();
@@ -33,27 +35,45 @@ export default function Top() {
     </Menu>
   );
 
+  // 반응형 웹
+  const [isShow, setIsShow] = useState(false);
+  console.log(isShow);
+
   return (
     <div className={styles.headerContainer}>
       <span onClick={() => move("/")} className={styles.home}>
         MovieTalk
       </span>
       {!user.email ? (
-        <div className={styles.userContainer}>
-          {/* 로그인 버튼 */}
-          <Button onClick={() => move("/LogIn")} className={styles.logIn}>
-            로그인
-          </Button>
-
-          {/* 회원가입 버튼 */}
-          <Button
-            style={{ marginLeft: 10 }}
-            onClick={() => move("/SignUp")}
-            className={styles.addUserIcon}
+        <>
+          {/* 햄버거 아이콘 */}
+          <div
+            onClick={() => setIsShow(!isShow)}
+            className={styles.hamburgerContainer}
           >
-            회원가입
-          </Button>
-        </div>
+            <MenuOutlined className={styles.hamburger} />
+          </div>
+          <div className={isShow ? styles.openMenu : styles.closeMenu}>
+            <div>로그인</div>
+            <div>회원가입</div>
+          </div>
+
+          <div className={styles.userContainer}>
+            {/* 로그인 버튼 */}
+            <Button onClick={() => move("/LogIn")} className={styles.logIn}>
+              로그인
+            </Button>
+
+            {/* 회원가입 버튼 */}
+            <Button
+              style={{ marginLeft: 10 }}
+              onClick={() => move("/SignUp")}
+              className={styles.addUserIcon}
+            >
+              회원가입
+            </Button>
+          </div>
+        </>
       ) : (
         <div className={styles.profileContainer}>
           {/* 프로필 버튼 */}

@@ -1,19 +1,36 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import styles from "../../styles/moviePage.module.css";
 import Loading from "../../components/Loading";
 import Comment from "../../components/Comment";
+import VisitedMovies from "../../components/VisitedMovies";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { clickMovie } from "../../store/reducers/detailMovieReducer";
 
 const MoviePage = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const detail = router.query.detail;
   const movie = useSelector((state: RootState) => state.detailMovie);
   const { loading, Title } = movie;
+  const visitedMovies = useSelector(
+    (state: RootState) => state.movies.visitedMovies
+  );
+
+  // 첫 방문 또는 뒤로 가기로 방문하는 경우
+  useEffect(() => {
+    dispatch(clickMovie(detail));
+  }, [detail]);
 
   return loading ? (
     <Loading />
   ) : Title ? (
     // 영화 상세 정보 페이지
     <div className={styles.moviePageContainer}>
+      {/* 최근 클릭한 영화 리스트 */}
+      {visitedMovies.length ? <VisitedMovies /> : null}
+
       <div className={styles.movieInfoAndComment}>
         <div className={styles.movieInfoContainer}>
           <img className={styles.poster} src={`${movie.Poster}`} alt="이미지" />

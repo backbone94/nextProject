@@ -2,10 +2,9 @@ import { detailMovieReducer } from "./reducers/detailMovieReducer";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 import { verifyReducer } from "./reducers/verifyReducer";
-import { searchMoviesReducer } from "./reducers/searchMoviesReducer";
+import { moviesReducer } from "./reducers/moviesReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   FLUSH,
@@ -42,15 +41,15 @@ const persistConfig = {
   // localStorage에 저장합니다.
   storage: storage,
   // userReducer의 state를 localStorage에 저장
-  whitelist: ["user", "verify", "search", "comment"],
+  whitelist: ["user", "verify", "comment", "detailMovie", "movies"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer.reducer,
   verify: verifyReducer.reducer,
-  detailMovie: detailMovieReducer.reducer,
   comment: commentReducer.reducer,
-  movies: searchMoviesReducer.reducer,
+  detailMovie: detailMovieReducer.reducer,
+  movies: moviesReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

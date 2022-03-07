@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { tokenCheck } from "../store/reducers/userReducer";
-import { searchFirstPage } from "../store/reducers/searchMoviesReducer";
+import { searchFirstPage } from "../store/reducers/moviesReducer";
 import styles from "../styles/home.module.css";
 import { Input } from "antd";
 import { useRouter } from "next/router";
