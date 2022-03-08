@@ -5,6 +5,7 @@ import config from "./config/index.js";
 import hpp from "hpp";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 
 import emailRoutes from "./api/email.js";
 import userRoutes from "./api/user.js";

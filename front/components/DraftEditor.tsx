@@ -1,11 +1,12 @@
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import "draft-js/dist/Draft.css";
-import { Editor } from "react-draft-wysiwyg";
+import { EditorProps } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
+import dynamic from "next/dynamic";
 
 export const MyBlock = styled.div`
   .wrapper-class {
@@ -18,6 +19,11 @@ export const MyBlock = styled.div`
     border-radius: 2px !important;
   }
 `;
+
+const Editor = dynamic<EditorProps>(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 const DraftEditor = ({ initialState, setContent }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
