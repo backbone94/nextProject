@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node server.mjs",
-    "build": "GENERATE_SOURCEMAP=false next build",
+    "build": "next build",
     "start": "NODE_ENV=production PORT=80 node server.mjs",
     "app": "node app"
   },

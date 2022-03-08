@@ -8,6 +8,8 @@ import { Input } from "antd";
 import { useRouter } from "next/router";
 
 export default function Home() {
+
+  
   const email = useSelector((state: RootState) => state.user.email);
   const dispatch = useDispatch();
   const router = useRouter();
