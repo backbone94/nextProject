@@ -7,7 +7,7 @@ const requestImg = async (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     formData.append("upload", e.target.files[0]);
     const result = await axios.post(
-      `http://localhost:7000/api/image`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/image`,
       formData
     );
     return result.data.url[0];

@@ -4,7 +4,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./app.js --exec babel-node"
+    "dev": "nodemon ./app.js --exec babel-node",
+    "build": "babel back --out-dir build"
   },
   "keywords": [],
   "author": "",

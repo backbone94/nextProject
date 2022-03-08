@@ -6,9 +6,12 @@ import { message } from "antd";
 // 토큰 유효성 검증
 export const tokenCheck = createAsyncThunk("user/verify", async () => {
   let token = localStorage.getItem("token") || "";
-  const res = await axios.post("http://localhost:7000/api/user/token", {
-    headers: { Authorization: token },
-  });
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/token`,
+    {
+      headers: { Authorization: token },
+    }
+  );
   console.log("토큰 유효성 결과: ", res.data);
   return res.data;
 });
@@ -16,7 +19,10 @@ export const tokenCheck = createAsyncThunk("user/verify", async () => {
 // 회원가입
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   if (!user.profile) user.profile = "/defaultImage.png";
-  const res = await axios.post("http://localhost:7000/api/user/signUp", user);
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/signUp`,
+    user
+  );
   console.log("회원가입 결과: ", res.data);
   if (res.data.token) localStorage.setItem("token", res.data.token);
   return res.data.newUser;
@@ -26,7 +32,10 @@ export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
 export const getUser = createAsyncThunk(
   "user/getUser",
   async (user: Object) => {
-    const res = await axios.post("http://localhost:7000/api/user/logIn", user);
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/logIn`,
+      user
+    );
     console.log("회원 정보 불러오기 결과: ", res.data);
     if (res.data.token) localStorage.setItem("token", res.data.token);
     if (res.data.error) return res.data;
@@ -38,9 +47,12 @@ export const getUser = createAsyncThunk(
 export const withdrawal = createAsyncThunk(
   "user/withdrawal",
   async (email: string, api) => {
-    const res = await axios.delete("http://localhost:7000/api/user", {
-      data: { email },
-    });
+    const res = await axios.delete(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`,
+      {
+        data: { email },
+      }
+    );
     console.log("회원 삭제 결과: ", res.data);
     return res.data;
   }
@@ -52,7 +64,7 @@ export const changeNickOrIntro = createAsyncThunk(
   async (user: Object) => {
     let token = localStorage.getItem("token") || "";
     const res = await axios.post(
-      "http://localhost:7000/api/user/changeNickOrIntro",
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/changeNickOrIntro`,
       {
         user,
         headers: { Authorization: token },
@@ -68,10 +80,13 @@ export const changePw = createAsyncThunk(
   "user/changePw",
   async (user: Object) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.put("http://localhost:7000/api/user/changePw", {
-      user,
-      headers: { Authorization: token },
-    });
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/changePw`,
+      {
+        user,
+        headers: { Authorization: token },
+      }
+    );
     console.log("비밀번호 변경 결과: ", res.data);
     return res.data;
   }
@@ -82,10 +97,13 @@ export const userLike = createAsyncThunk(
   "user/userLike",
   async (userLike: Object) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.post("http://localhost:7000/api/user/userLike", {
-      userLike,
-      headers: { Authorization: token },
-    });
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/userLike`,
+      {
+        userLike,
+        headers: { Authorization: token },
+      }
+    );
     console.log("유저 좋아요 업데이트 결과: ", res.data);
     return res.data;
   }

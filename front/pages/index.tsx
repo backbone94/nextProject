@@ -26,8 +26,22 @@ export default function Home() {
     }
   };
 
+  const move = (route: string) => {
+    router.push(route);
+  };
+
   return (
     <div className={styles.homeContainer}>
+      {!email ? (
+        <div className={styles.mobileLogInSignUp}>
+          <span onClick={() => move("/LogIn")} className={styles.mobileLogIn}>
+            로그인
+          </span>
+          <span onClick={() => move("/SignUp")} className={styles.mobileSignUp}>
+            회원가입
+          </span>
+        </div>
+      ) : null}
       <div className={styles.searchInputContainer}>
         <div className={styles.gifContainer}>
           <img className={styles.gif} src="/totoro.gif" alt="totoro" />

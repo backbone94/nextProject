@@ -1,60 +1,98 @@
-.profileContainer {
-  width: 600px;
-  margin: auto;
+/* 모바일 화면 */
+@media screen and (max-width: 700px) {
+  .nickAndIntroContainer {
+    padding: 10px;
+    margin: 20px 20px;
+    border: 1px solid rgba(128, 128, 128, 0.295);
+  }
+  .passwordInputContainer {
+    padding: 10px;
+    margin: 20px 20px;
+    border: 1px solid rgba(128, 128, 128, 0.377);
+  }
+  .nickNameLabel,
+  .passwordLabel {
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+  .introduce {
+    font-weight: 800;
+    margin: 20px auto 5px;
+  }
+  .submitButton {
+    text-align: center;
+    margin: 30px 0;
+    /* border: 1px solid red; */
+  }
+  .currentPw,
+  .newPw {
+    margin-bottom: 10px;
+  }
+  .withdrawal {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
 }
 
-.imageContainer {
-  text-align: center;
-  font-size: 128px;
-  /* border: 1px solid red; */
-}
+/* 컴퓨터 화면 */
+@media screen and (min-width: 700px) {
+  .profileContainer {
+    width: 600px;
+    margin: auto;
+  }
+  .imageContainer {
+    text-align: center;
+    font-size: 128px;
+    /* border: 1px solid red; */
+  }
 
-.fileInput {
-  width: 0;
-  height: 0;
-  position: absolute;
-}
+  .fileInput {
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
 
-.image {
-  cursor: pointer;
-  /* border: 1px solid red; */
-}
+  .image {
+    cursor: pointer;
+    /* border: 1px solid red; */
+  }
 
-.defaultImage {
-  text-align: center;
-}
+  .defaultImage {
+    text-align: center;
+  }
 
-.nickAndIntroContainer {
-  padding: 10px;
-  margin: 20px 0;
-  border: 1px solid rgba(128, 128, 128, 0.205);
-}
+  .nickAndIntroContainer {
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid rgba(128, 128, 128, 0.205);
+  }
 
-.nickNameInputContainer,
-.passwordInputContainer {
-  display: flex;
-  flex-direction: column;
-  /* border: 1px solid red; */
-}
+  .nickNameInputContainer,
+  .passwordInputContainer {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
+  }
 
-.passwordInputContainer {
-  padding: 10px;
-  margin-bottom: 50px;
-  border: 1px solid rgba(128, 128, 128, 0.205);
-}
+  .passwordInputContainer {
+    padding: 10px;
+    margin-bottom: 50px;
+    border: 1px solid rgba(128, 128, 128, 0.205);
+  }
 
-.nickNameLabel,
-.passwordLabel {
-  font-weight: 800;
-  margin-bottom: 5px;
-}
+  .nickNameLabel,
+  .passwordLabel {
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
 
-.introduce {
-  font-weight: 800;
-  margin: 20px auto 5px;
-}
-.submitButton {
-  text-align: center;
-  margin: 30px 0;
-  /* border: 1px solid red; */
+  .introduce {
+    font-weight: 800;
+    margin: 20px auto 5px;
+  }
+  .submitButton {
+    text-align: center;
+    margin: 30px 0;
+    /* border: 1px solid red; */
+  }
 }

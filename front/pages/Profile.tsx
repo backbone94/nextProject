@@ -109,6 +109,7 @@ export default function Profile() {
       <div className={styles.passwordInputContainer}>
         <div className={styles.passwordLabel}>비밀번호</div>
         <Input
+          className={styles.currentPw}
           size="large"
           value={prevPw}
           onChange={(e) => setPrevPw(e.target.value)}
@@ -117,6 +118,7 @@ export default function Profile() {
         />
         <br />
         <Input
+          className={styles.newPw}
           size="large"
           value={newPw}
           onChange={(e) => setNewPw(e.target.value)}
@@ -154,7 +156,12 @@ export default function Profile() {
         okText="네"
         cancelText="아니오"
       >
-        <Button style={{ marginBottom: 50 }} type="primary" danger>
+        <Button
+          className={styles.withdrawal}
+          style={{ marginBottom: 50 }}
+          type="primary"
+          danger
+        >
           회원 탈퇴
         </Button>
       </Popconfirm>

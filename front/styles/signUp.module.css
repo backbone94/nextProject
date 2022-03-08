@@ -4,6 +4,22 @@
   /* border: 1px solid blue; */
 }
 
+/* 모바일 화면 */
+@media screen and (max-width: 700px) {
+  .submitButton {
+    margin: 10px auto 100px;
+    /* border: 1px solid red; */
+  }
+}
+
+/* 컴퓨터 화면 */
+@media screen and (min-width: 700px) {
+  .submitButton {
+    margin: 10px auto 0;
+    /* border: 1px solid red; */
+  }
+}
+
 .imageContainer {
   font-size: 100px;
   text-align: center;
@@ -42,9 +58,4 @@
 .verifyInput {
   font-size: 20px;
   margin-bottom: 20px;
-}
-
-.submitButton {
-  margin: 10px auto 0;
-  /* border: 1px solid red; */
 }

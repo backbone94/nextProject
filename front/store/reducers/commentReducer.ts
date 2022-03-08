@@ -7,9 +7,12 @@ import { Comment } from "../type/comment";
 export const getCommentList = createAsyncThunk(
   "comment/getCommentList",
   async (movie: string | string[]) => {
-    const res = await axios.get(`http://localhost:7000/api/comment`, {
-      params: { movie: movie },
-    });
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comment`,
+      {
+        params: { movie: movie },
+      }
+    );
     console.log("리뷰 불러오기 결과: ", res.data);
 
     return res.data;
@@ -21,10 +24,13 @@ export const addComment = createAsyncThunk(
   "comment/addComment",
   async (comment: Object) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.post(`http://localhost:7000/api/comment`, {
-      comment,
-      headers: { Authorization: token },
-    });
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comment`,
+      {
+        comment,
+        headers: { Authorization: token },
+      }
+    );
     console.log("리뷰 쓰기 결과: ", res.data);
     return res.data;
   }
@@ -35,7 +41,7 @@ export const commentLike = createAsyncThunk(
   "comment/commentLike",
   async (like: Object) => {
     const res = await axios.post(
-      `http://localhost:7000/api/comment/commentLike`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comment/commentLike`,
       like
     );
     console.log("좋아요 수 변경 결과: ", res.data);
@@ -48,7 +54,7 @@ export const removeComment = createAsyncThunk(
   "comment/removeComment",
   async (comment: Comment) => {
     const res = await axios.delete(
-      `http://localhost:7000/api/comment/removeComment`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comment/removeComment`,
       {
         data: { comment: comment },
       }

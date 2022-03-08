@@ -6,7 +6,10 @@ import { message } from "antd";
 export const emailVerify = createAsyncThunk(
   "email/emailVerify",
   async (email: String) => {
-    const res = await axios.post("http://localhost:7000/api/email", { email });
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/email`,
+      { email }
+    );
     console.log("이메일 인증 결과: ", res.data);
     return res.data;
   }
