@@ -68,9 +68,9 @@ export const moviesReducer = createSlice({
           // 검색 결과 있는 경우
         } else {
           state.lastPage = Math.ceil(payload.totalResults / 10.0);
+          state.movieList = payload.Search;
           state.loading = false;
           state.error = false;
-          state.movieList = payload.Search;
         }
       })
       // 다음 페이지 로딩

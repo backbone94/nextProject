@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { searchVideo } from "./videoReducer";
 
 // 염화 검색
 export const clickMovie = createAsyncThunk(

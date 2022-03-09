@@ -3,6 +3,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 import { verifyReducer } from "./reducers/verifyReducer";
 import { moviesReducer } from "./reducers/moviesReducer";
+import { videoReducer } from "./reducers/videoReducer";
+import { translateReducer } from "./reducers/translateReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
@@ -50,6 +52,8 @@ const rootReducer = combineReducers({
   comment: commentReducer.reducer,
   detailMovie: detailMovieReducer.reducer,
   movies: moviesReducer.reducer,
+  video: videoReducer.reducer,
+  translate: translateReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

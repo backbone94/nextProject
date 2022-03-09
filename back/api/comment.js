@@ -16,7 +16,7 @@ export default router;
 // 리뷰 달기 POST api/comment
 router.post("/", auth, async (req, res) => {
   try {
-    console.log(req.body);
+    console.log(req.body.comment.movie);
     const { movie, rate, text, user, nickName, profile } = req.body.comment;
     let newComment = await Comment.create({
       movie,

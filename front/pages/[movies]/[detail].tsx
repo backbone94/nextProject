@@ -7,12 +7,14 @@ import VisitedMovies from "../../components/VisitedMovies";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { clickMovie } from "../../store/reducers/detailMovieReducer";
+import { searchVideo } from "../../store/reducers/videoReducer";
 
 const MoviePage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const detail = router.query.detail;
   const movie = useSelector((state: RootState) => state.detailMovie);
+  const videoId = useSelector((state: RootState) => state.video.video);
   const { loading, Title } = movie;
   const visitedMovies = useSelector(
     (state: RootState) => state.movies.visitedMovies
@@ -21,6 +23,7 @@ const MoviePage = () => {
   // 첫 방문 또는 뒤로 가기로 방문하는 경우
   useEffect(() => {
     dispatch(clickMovie(detail));
+    dispatch(searchVideo(detail));
   }, [detail]);
 
   return loading ? (
@@ -46,8 +49,21 @@ const MoviePage = () => {
             <div className={styles.text}>{movie.Genre}</div>
           </div>
         </div>
-        {/* 한줄 리뷰 */}
-        <Comment />
+      </div>
+      {/* 한줄 리뷰 */}
+      <Comment />
+
+      {/* 영화 예고편 */}
+      <div className={styles.video}>
+        <iframe
+          key={videoId}
+          width="100%"
+          height="100%"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          frameBorder="0"
+          allow="accelerometer; rel=0; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
     </div>
   ) : (
