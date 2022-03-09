@@ -1,13 +1,15 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import translate from "../../util/translate";
 
 // 영화 첫 페이지 검색
 export const searchFirstPage = createAsyncThunk(
   "movies/firstPage",
   async (title: string | string[]) => {
+    const translated = await translate(title);
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${title}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}`
     );
     console.log("영화 첫 페이지 검색 결과: ", res.data);
     return res.data;
@@ -19,8 +21,9 @@ export const searchNextPage = createAsyncThunk(
   "movies/nextPage",
   async (nextPage: { title: string | string[]; page: number }) => {
     const { title, page } = nextPage;
+    const translated = await translate(title);
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${title}&page=${page}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}&page=${page}`
     );
     console.log("추가로 가져온 영화 목록: ", res.data);
     return res.data;
@@ -46,7 +49,9 @@ export const moviesReducer = createSlice({
         if (visited.title === payload.title) return true;
       });
       if (isVisited) return;
-      else state.visitedMovies.push(payload);
+      else {
+        state.visitedMovies.push(payload);
+      }
     },
     deleteVisited: (state) => {
       state.visitedMovies = [];

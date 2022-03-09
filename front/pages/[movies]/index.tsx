@@ -72,8 +72,6 @@ const Movies = () => {
     router.push(`/${moviesParam}/${title}`);
   };
 
-  console.log(movieList);
-
   return loading ? (
     <Loading />
   ) : !error ? (
