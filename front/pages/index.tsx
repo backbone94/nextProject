@@ -3,15 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { tokenCheck } from "../store/reducers/userReducer";
 import { searchFirstPage } from "../store/reducers/moviesReducer";
-import { translate } from "../store/reducers/translateReducer";
 import styles from "../styles/home.module.css";
 import { Input } from "antd";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const translated = useSelector(
-    (state: RootState) => state.translate.translatedText
-  );
   const email = useSelector((state: RootState) => state.user.email);
   const dispatch = useDispatch();
   const router = useRouter();

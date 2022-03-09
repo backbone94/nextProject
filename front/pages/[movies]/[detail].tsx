@@ -8,6 +8,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { clickMovie } from "../../store/reducers/detailMovieReducer";
 import { searchVideo } from "../../store/reducers/videoReducer";
+import { searchblog } from "../../store/reducers/blogReducer";
+import ReactHtmlParser from "react-html-parser";
+import Link from "next/link";
 
 const MoviePage = () => {
   const router = useRouter();
@@ -19,11 +22,13 @@ const MoviePage = () => {
   const visitedMovies = useSelector(
     (state: RootState) => state.movies.visitedMovies
   );
+  const postList = useSelector((state: RootState) => state.blog.postList);
 
   // 첫 방문 또는 뒤로 가기로 방문하는 경우
   useEffect(() => {
     dispatch(clickMovie(detail));
     dispatch(searchVideo(detail));
+    dispatch(searchblog(detail));
   }, [detail]);
 
   return loading ? (
@@ -40,7 +45,7 @@ const MoviePage = () => {
           <div className={styles.movieInfo}>
             <div className={styles.title}>{movie.Title}</div>
             <div className={styles.released}>{movie.Released}</div>
-            <div className={styles.text}>{movie.Plot}</div>
+            <div className={styles.text}>{ReactHtmlParser(movie.Plot)}</div>
             <div className={styles.director}>Director</div>
             <div className={styles.text}>{movie.Director}</div>
             <div className={styles.actors}>Actors</div>
@@ -61,9 +66,32 @@ const MoviePage = () => {
           height="100%"
           src={`https://www.youtube.com/embed/${videoId}`}
           frameBorder="0"
-          allow="accelerometer; rel=0; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
+      </div>
+
+      {/* 네이버 블로그 */}
+      <div className={styles.blog}>
+        <div className={styles.naverText}>네이버 블로그 리뷰</div>
+        {postList.map((post) => (
+          <a
+            style={{ color: "black" }}
+            target="_blank"
+            key={post.description}
+            href={post.link}
+          >
+            <div className={styles.postCard}>
+              <div className={styles.postTitle}>
+                {ReactHtmlParser(post.title)}
+              </div>
+              <div className={styles.date}>{post.postdate}</div>
+              <div className={styles.postDesc}>
+                {ReactHtmlParser(post.description)}
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   ) : (

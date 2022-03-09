@@ -4,7 +4,7 @@ import { userReducer } from "./reducers/userReducer";
 import { verifyReducer } from "./reducers/verifyReducer";
 import { moviesReducer } from "./reducers/moviesReducer";
 import { videoReducer } from "./reducers/videoReducer";
-import { translateReducer } from "./reducers/translateReducer";
+import { blogReducer } from "./reducers/blogReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
@@ -53,7 +53,7 @@ const rootReducer = combineReducers({
   detailMovie: detailMovieReducer.reducer,
   movies: moviesReducer.reducer,
   video: videoReducer.reducer,
-  translate: translateReducer.reducer,
+  blog: blogReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

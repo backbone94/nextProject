@@ -13,7 +13,7 @@ const LogIn = () => {
 
   // 로그인 하면 홈으로 이동
   if (email) {
-    router.push("/");
+    router.back();
   }
 
   // 로그인

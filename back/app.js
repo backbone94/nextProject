@@ -11,6 +11,7 @@ import emailRoutes from "./api/email.js";
 import userRoutes from "./api/user.js";
 import imageRoutes from "./api/image.js";
 import commentRoutes from "./api/comment.js";
+import naverBlogRoutes from "./api/naverBlog.js";
 
 const { PORT, MONGO_URI } = config;
 
@@ -38,6 +39,7 @@ app.use("/api/email", emailRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/image", imageRoutes);
 app.use("/api/comment", commentRoutes);
+app.use("/api/naverBlog", naverBlogRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);

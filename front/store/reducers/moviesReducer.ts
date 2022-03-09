@@ -9,7 +9,7 @@ export const searchFirstPage = createAsyncThunk(
   async (title: string | string[]) => {
     const translated = await translate(title);
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}&type=movie`
     );
     console.log("영화 첫 페이지 검색 결과: ", res.data);
     return res.data;
@@ -23,7 +23,7 @@ export const searchNextPage = createAsyncThunk(
     const { title, page } = nextPage;
     const translated = await translate(title);
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}&page=${page}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&s=${translated}&page=${page}&type=movie`
     );
     console.log("추가로 가져온 영화 목록: ", res.data);
     return res.data;

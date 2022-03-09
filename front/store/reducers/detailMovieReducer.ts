@@ -9,7 +9,7 @@ export const clickMovie = createAsyncThunk(
   "detailMovie/title",
   async (title: string | string[]) => {
     const res = await axios.get(
-      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}`
+      `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_API}&t=${title}&plot=full`
     );
     console.log("클릭한 영화 결과: ", res.data);
     const { Actors, Director, Genre, Plot } = res.data;
