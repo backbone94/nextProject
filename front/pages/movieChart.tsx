@@ -1,61 +1,54 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import styles from "../../styles/moviePage.module.css";
-import Loading from "../../components/Loading";
-import Comment from "../../components/Comment";
-import VisitedMovies from "../../components/VisitedMovies";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { clickMovie } from "../../store/reducers/detailMovieReducer";
-import { searchVideo } from "../../store/reducers/videoReducer";
-import { searchblog } from "../../store/reducers/blogReducer";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import styles from "../styles/moviePage.module.css";
+import { imdbSearch } from "../store/reducers/detailMovieReducer";
+import Loading from "../components/Loading";
+import Comment from "../components/Comment";
 import ReactHtmlParser from "react-html-parser";
+import { searchVideo } from "../store/reducers/videoReducer";
+import { searchblog } from "../store/reducers/blogReducer";
 
-const MoviePage = () => {
+const movieChart = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const detail = router.query.detail;
-  const movie = useSelector((state: RootState) => state.detailMovie);
-  const videoId = useSelector((state: RootState) => state.video.video);
-  const { loading, Title } = movie;
-  const visitedMovies = useSelector(
-    (state: RootState) => state.movies.visitedMovies
+  const id = router.query.id;
+  const { imdb, loading } = useSelector(
+    (state: RootState) => state.detailMovie
   );
+  const { title, stars, directors, genres, image, plotLocal, releaseDate } =
+    imdb;
+  const videoId = useSelector((state: RootState) => state.video.video);
   const postList = useSelector((state: RootState) => state.blog.postList);
 
-  // 첫 방문 또는 뒤로 가기로 방문하는 경우
   useEffect(() => {
-    dispatch(clickMovie(detail));
-    dispatch(searchVideo(detail));
-    dispatch(searchblog(detail));
-  }, [detail]);
+    dispatch(imdbSearch(id));
+    dispatch(searchVideo(title));
+    dispatch(searchblog(title));
+  }, [id, title]);
 
   return loading ? (
     <Loading />
-  ) : Title ? (
+  ) : title ? (
     // 영화 상세 정보 페이지
     <div className={styles.moviePageContainer}>
-      {/* 최근 클릭한 영화 리스트 */}
-      {visitedMovies.length ? <VisitedMovies /> : null}
-
       <div className={styles.movieInfoAndComment}>
         <div className={styles.movieInfoContainer}>
-          <img className={styles.poster} src={`${movie.Poster}`} alt="이미지" />
+          <img className={styles.poster} src={`${image}`} alt="이미지" />
           <div className={styles.movieInfo}>
-            <div className={styles.title}>{movie.Title}</div>
-            <div className={styles.released}>{movie.Released}</div>
-            <div className={styles.text}>{ReactHtmlParser(movie.Plot)}</div>
+            <div className={styles.title}>{title}</div>
+            <div className={styles.released}>{releaseDate}</div>
+            <div className={styles.text}>{plotLocal}</div>
             <div className={styles.director}>Director</div>
-            <div className={styles.text}>{movie.Director}</div>
+            <div className={styles.text}>{directors}</div>
             <div className={styles.actors}>Actors</div>
-            <div className={styles.text}>{movie.Actors}</div>
+            <div className={styles.text}>{stars}</div>
             <div className={styles.genre}>Genre</div>
-            <div className={styles.text}>{movie.Genre}</div>
+            <div className={styles.text}>{genres}</div>
           </div>
         </div>
       </div>
-      {/* 한줄 리뷰 */}
-      <Comment />
 
       {/* 영화 예고편 */}
       <div className={styles.video}>
@@ -105,4 +98,4 @@ const MoviePage = () => {
   );
 };
 
-export default MoviePage;
+export default movieChart;

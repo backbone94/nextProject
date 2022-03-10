@@ -1,5 +1,6 @@
 .signUpContainer {
   display: flex;
+  /* min-height: 630px; */
   flex-direction: column;
   /* border: 1px solid blue; */
 }
@@ -15,7 +16,7 @@
 /* 컴퓨터 화면 */
 @media screen and (min-width: 700px) {
   .submitButton {
-    margin: 10px auto 0;
+    margin: 10px auto 10px;
     /* border: 1px solid red; */
   }
 }

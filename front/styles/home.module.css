@@ -65,6 +65,51 @@
   }
 }
 
+/* 무비차트  시작 */
+
+.weekBoxofficeContainer {
+  /* position: absolute; */
+  margin: 100px auto;
+  width: 510px;
+  /* border: 1px solid red; */
+}
+
+.movieChartCard {
+  transition: all 0.2s;
+}
+
+.movieChartCard:hover {
+  box-shadow: 1px 1px 5px 5px rgba(128, 128, 128, 0.438);
+}
+
+.movieChartText {
+  text-align: center;
+  font-size: 30px;
+  margin: 10px 0 20px;
+}
+
+.no {
+  background-color: #fb4357;
+  color: white;
+  font-size: 17px;
+  text-align: center;
+}
+
+.info {
+  border: 1px solid rgba(128, 128, 128, 0.212);
+}
+
+.movieChartTitle {
+  font-size: 15px;
+  margin: 5px 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 무비차트 끝 */
+
 .searchInputContainer {
   margin: 100px auto 0;
   width: 300px;

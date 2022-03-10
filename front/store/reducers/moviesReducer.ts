@@ -30,6 +30,19 @@ export const searchNextPage = createAsyncThunk(
   }
 );
 
+// 주간 박스오피스
+export const weekBoxoffice = createAsyncThunk(
+  "movies/boxoffice",
+  async (date: string) => {
+    const res = await axios.get(
+      // `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.NEXT_PUBLIC_KOREA_MOVIE_API}&weekGb=0&targetDt=${date}`
+      `https://imdb-api.com/ko/API/BoxOffice/${process.env.NEXT_PUBLIC_IMDB_API}`
+    );
+    console.log("주간 박스오피스 목록: ", res.data);
+    return res.data;
+  }
+);
+
 const initialState = {
   movieList: [],
   error: false,
@@ -37,6 +50,7 @@ const initialState = {
   infinityLoading: false,
   lastPage: 0,
   visitedMovies: [],
+  boxOffice: [],
 };
 
 export const moviesReducer = createSlice({
@@ -91,6 +105,14 @@ export const moviesReducer = createSlice({
           });
         }
         state.infinityLoading = false;
+      })
+      // 주간 박스오피스
+      .addCase(weekBoxoffice.fulfilled, (state, { payload }) => {
+        // state.boxOffice = payload.boxOfficeResult.weeklyBoxOfficeList;
+        if (payload.errorMessage) message.error(payload.errorMessage);
+        else {
+          state.boxOffice = payload.items;
+        }
       });
   },
 });

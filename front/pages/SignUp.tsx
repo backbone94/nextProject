@@ -49,7 +49,7 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <div style={{ minHeight: 630 }}>
       <div style={{ fontSize: 30, textAlign: "center", marginTop: 100 }}>
         회원가입
       </div>
@@ -69,7 +69,7 @@ const SignUp = () => {
         setUser={setUser}
         submit={submit}
       />
-    </>
+    </div>
   );
 };
 

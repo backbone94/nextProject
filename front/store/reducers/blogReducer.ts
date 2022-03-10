@@ -24,6 +24,16 @@ export const blogReducer = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(searchblog.fulfilled, (state, { payload }) => {
+      payload.forEach((post) => {
+        const { postdate } = post;
+        post.postdate =
+          postdate.slice(0, 4) +
+          "." +
+          postdate.slice(4, 6) +
+          "." +
+          postdate.slice(6, 8);
+        console.log(postdate);
+      });
       state.postList = payload;
     });
   },
