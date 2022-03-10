@@ -32,7 +32,6 @@ export const blogReducer = createSlice({
           postdate.slice(4, 6) +
           "." +
           postdate.slice(6, 8);
-        console.log(postdate);
       });
       state.postList = payload;
     });

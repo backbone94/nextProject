@@ -14,7 +14,7 @@ import ReactHtmlParser from "react-html-parser";
 const MoviePage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const detail = router.query.detail;
+  const { title } = router.query;
   const movie = useSelector((state: RootState) => state.detailMovie);
   const videoId = useSelector((state: RootState) => state.video.video);
   const { loading, Title } = movie;
@@ -25,10 +25,10 @@ const MoviePage = () => {
 
   // 첫 방문 또는 뒤로 가기로 방문하는 경우
   useEffect(() => {
-    dispatch(clickMovie(detail));
-    dispatch(searchVideo(detail));
-    dispatch(searchblog(detail));
-  }, [detail]);
+    dispatch(clickMovie(title));
+    // dispatch(searchVideo(detail));
+    dispatch(searchblog(title));
+  }, [title]);
 
   return loading ? (
     <Loading />

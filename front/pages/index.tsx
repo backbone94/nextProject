@@ -3,35 +3,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { tokenCheck } from "../store/reducers/userReducer";
 import {
+  now,
   searchFirstPage,
-  weekBoxoffice,
+  topRated,
+  upcoming,
 } from "../store/reducers/moviesReducer";
 import styles from "../styles/home.module.css";
 import { Input } from "antd";
 import { useRouter } from "next/router";
-import MovieChart from "../components/MovieChart";
+import HomeMovie from "../components/HomeMovie";
 
 export default function Home() {
   const email = useSelector((state: RootState) => state.user.email);
-  // const boxOffice = useSelector((state: RootState) => state.movies.boxOffice)
+  const topRatedList = useSelector(
+    (state: RootState) => state.movies.topRatedList
+  );
+  const nowList = useSelector((state: RootState) => state.movies.nowList);
+  const upcomingList = useSelector(
+    (state: RootState) => state.movies.upcomingList
+  );
   const dispatch = useDispatch();
   const router = useRouter();
   const [movies, setMovies] = useState("");
 
-  // 일주일 전 날짜
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate() - 6;
-  const weekAgo = new Date(year, month, day)
-    .toISOString()
-    .substring(0, 10)
-    .replace(/-/g, "");
-
   useEffect(() => {
     // 사이트 방문 시 토큰 유효 체크
     if (email) dispatch(tokenCheck());
-    dispatch(weekBoxoffice(weekAgo));
+    dispatch(topRated());
+    dispatch(now());
+    dispatch(upcoming());
   }, []);
 
   const enterMovies = (e) => {
@@ -45,8 +45,46 @@ export default function Home() {
     router.push(route);
   };
 
+  // 특정 범위 랜덤 숫자
+  const random = Math.floor(Math.random() * 20);
+
   return (
     <div className={styles.homeContainer}>
+      {/* 배경 */}
+      <div
+        style={
+          {
+            // display: "flex",
+            // position: "fixed",
+            // zIndex: -99,
+            // width: "100%",
+            // height: "100%",
+            // backgroundColor: 0.5,
+            // backdropFilter: blur()
+          }
+        }
+        className={styles.back}
+      >
+        <img
+          src={`https://image.tmdb.org/t/p/original${
+            topRatedList[Math.floor(Math.random() * 20)].poster_path
+          }`}
+          alt="image"
+        />
+        <img
+          src={`https://image.tmdb.org/t/p/original${
+            topRatedList[Math.floor(Math.random() * 20)].poster_path
+          }`}
+          alt="image"
+        />
+        <img
+          src={`https://image.tmdb.org/t/p/original${
+            topRatedList[Math.floor(Math.random() * 20)].poster_path
+          }`}
+          alt="image"
+        />
+      </div>
+
       {/* 모바일 로그인&회원가입 */}
       {!email ? (
         <div className={styles.mobileLogInSignUp}>
@@ -74,10 +112,16 @@ export default function Home() {
         />
       </div>
 
-      {/* 무비 차트 */}
-      <div className={styles.weekBoxofficeContainer}>
-        <div className={styles.movieChartText}>주간 무비차트</div>
-        <MovieChart />
+      {/* 무비차트 & 개봉 예정작 */}
+      <div style={{ display: "flex" }}>
+        {/* 명작 */}
+        <HomeMovie type={"인기작"} list={topRatedList} />
+
+        {/* 현재 상영작 */}
+        <HomeMovie type={"현재 상영작"} list={nowList} />
+
+        {/* 개봉 예정작 */}
+        <HomeMovie type={"개봉 예정작"} list={upcomingList} />
       </div>
     </div>
   );

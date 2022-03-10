@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 import translate from "../../util/translate";
 
-// 영화 첫 페이지 검색
+// 영화 첫 페이지 검색 (OMDB)
 export const searchFirstPage = createAsyncThunk(
   "movies/firstPage",
   async (title: string | string[]) => {
@@ -16,7 +16,7 @@ export const searchFirstPage = createAsyncThunk(
   }
 );
 
-// 다음 페이지 검색
+// 다음 페이지 검색 (OMDB)
 export const searchNextPage = createAsyncThunk(
   "movies/nextPage",
   async (nextPage: { title: string | string[]; page: number }) => {
@@ -30,18 +30,53 @@ export const searchNextPage = createAsyncThunk(
   }
 );
 
-// 주간 박스오피스
-export const weekBoxoffice = createAsyncThunk(
-  "movies/boxoffice",
-  async (date: string) => {
-    const res = await axios.get(
-      // `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.NEXT_PUBLIC_KOREA_MOVIE_API}&weekGb=0&targetDt=${date}`
-      `https://imdb-api.com/ko/API/BoxOffice/${process.env.NEXT_PUBLIC_IMDB_API}`
-    );
-    console.log("주간 박스오피스 목록: ", res.data);
-    return res.data;
-  }
-);
+// 명작 (TMDB)
+export const topRated = createAsyncThunk(`movies/topRated`, async () => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API}&language=ko-KR&page=1&region=KR`
+  );
+
+  // 개봉년도 뽑아내기
+  res.data.results.forEach((movie) => {
+    movie.release_date = movie.release_date.slice(0, 4);
+  });
+
+  console.log(`인기작 목록: `, res.data);
+
+  return res.data;
+});
+
+// 현재 상영작 (TMDB)
+export const now = createAsyncThunk(`movies/now`, async () => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.NEXT_PUBLIC_TMDB_API}&language=ko-KR&page=1&region=KR`
+  );
+
+  // 개봉년도 뽑아내기
+  res.data.results.forEach((movie) => {
+    movie.release_date = movie.release_date.slice(0, 4);
+  });
+
+  console.log(`현재 상영작 목록: `, res.data);
+
+  return res.data;
+});
+
+// 개봉 예정작 (TMDB)
+export const upcoming = createAsyncThunk(`movies/upcoming`, async () => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.NEXT_PUBLIC_TMDB_API}&language=ko-KR&page=1&region=KR`
+  );
+
+  // 개봉년도 뽑아내기
+  res.data.results.forEach((movie) => {
+    movie.release_date = movie.release_date.slice(0, 4);
+  });
+
+  console.log("개봉 예정작 목록", res.data);
+
+  return res.data;
+});
 
 const initialState = {
   movieList: [],
@@ -50,7 +85,9 @@ const initialState = {
   infinityLoading: false,
   lastPage: 0,
   visitedMovies: [],
-  boxOffice: [],
+  nowList: [],
+  upcomingList: [],
+  topRatedList: [],
 };
 
 export const moviesReducer = createSlice({
@@ -106,12 +143,37 @@ export const moviesReducer = createSlice({
         }
         state.infinityLoading = false;
       })
-      // 주간 박스오피스
-      .addCase(weekBoxoffice.fulfilled, (state, { payload }) => {
-        // state.boxOffice = payload.boxOfficeResult.weeklyBoxOfficeList;
-        if (payload.errorMessage) message.error(payload.errorMessage);
+      // 인기작
+      .addCase(topRated.pending, (state, { payload }) => {
+        state.loading = true;
+      })
+      .addCase(topRated.fulfilled, (state, { payload }) => {
+        if (!payload.total_results) message.error(payload.errorMessage);
         else {
-          state.boxOffice = payload.items;
+          state.topRatedList = payload.results;
+          state.loading = false;
+        }
+      })
+      // 현재 상영작
+      .addCase(now.pending, (state, { payload }) => {
+        state.loading = true;
+      })
+      .addCase(now.fulfilled, (state, { payload }) => {
+        if (!payload.total_results) message.error(payload.errorMessage);
+        else {
+          state.nowList = payload.results;
+          state.loading = false;
+        }
+      })
+      // 개봉 예정작
+      .addCase(upcoming.pending, (state, { payload }) => {
+        state.loading = true;
+      })
+      .addCase(upcoming.fulfilled, (state, { payload }) => {
+        if (!payload.total_results) message.error(payload.errorMessage);
+        else {
+          state.upcomingList = payload.results;
+          state.loading = false;
         }
       });
   },

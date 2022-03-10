@@ -1,4 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const Document = () => {
   return (

@@ -50,11 +50,13 @@
   transition: all 0.2s;
   width: 235px;
   height: 405px;
-  border: 1px solid rgba(0, 0, 0, 0.123);
+  border-radius: 10px;
+  overflow: hidden;
+  /* border: 1px solid rgba(0, 0, 0, 0.123); */
 }
 
 .movieCard:hover {
-  box-shadow: 1px 1px 5px 5px rgba(128, 128, 128, 0.438);
+  box-shadow: 5px 5px 10px 0 rgba(128, 128, 128, 0.438);
 }
 
 .movieImage {

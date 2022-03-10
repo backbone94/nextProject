@@ -14,14 +14,14 @@ const Comment = () => {
   const comment = useSelector((state: RootState) => state.comment);
   const { commentList } = comment;
   const router = useRouter();
-  const { detail } = router.query;
+  const { title } = router.query;
   const [star, setStar] = useState(0);
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCommentList(detail));
-  }, [detail]);
+    if (title) dispatch(getCommentList(title));
+  }, [title]);
 
   const handleChange = (value: number) => {
     setStar(value);
@@ -31,9 +31,10 @@ const Comment = () => {
   const register = (e) => {
     if (e.key === "Enter" || e._reactName === "onClick") {
       if (!text) return;
+      if (!title) return;
       dispatch(
         addComment({
-          movie: detail,
+          movie: title,
           rate: star,
           text,
           user: user._id,
