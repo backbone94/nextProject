@@ -158,6 +158,44 @@ router.post("/userLike", auth, async (req, res) => {
   }
 });
 
+// 개봉 알람 설정 POST api/user/alarm
+router.post("/alarm", auth, async (req, res) => {
+  try {
+    const { email, title, releaseDate } = req.body.object;
+    console.log(email, title, releaseDate);
+
+    const updateUser = await User.findOneAndUpdate(
+      { email },
+      { $push: { alarm: { title, releaseDate } } },
+      { new: true }
+    );
+
+    console.log("알람 설정 결과", updateUser);
+    res.json(updateUser);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// 개봉 알람 취소 DELETE api/user/alarm
+router.delete("/alarm", auth, async (req, res) => {
+  try {
+    const { email, title, releaseDate } = req.body.object;
+    console.log(email, title, releaseDate);
+
+    const updateUser = await User.findOneAndUpdate(
+      { email },
+      { $pull: { alarm: { title, releaseDate } } },
+      { new: true }
+    );
+
+    console.log("알람 취소 결과", updateUser);
+    res.json(title);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 // DELETE api/user
 router.delete("/", async (req, res) => {
   try {

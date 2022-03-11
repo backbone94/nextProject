@@ -12,11 +12,12 @@ import styles from "../styles/home.module.css";
 import { Input } from "antd";
 import { useRouter } from "next/router";
 import HomeMovie from "../components/HomeMovie";
+import { ringAlarm } from "../store/reducers/detailMovieReducer";
 
 export default function Home() {
-  const email = useSelector((state: RootState) => state.user.email);
-  const topRatedList = useSelector(
-    (state: RootState) => state.movies.topRatedList
+  const { email, alarm } = useSelector((state: RootState) => state.user);
+  const popularList = useSelector(
+    (state: RootState) => state.movies.popularList
   );
   const nowList = useSelector((state: RootState) => state.movies.nowList);
   const upcomingList = useSelector(
@@ -29,10 +30,13 @@ export default function Home() {
   useEffect(() => {
     // 사이트 방문 시 토큰 유효 체크
     if (email) dispatch(tokenCheck());
+
+    // 로그인하면 알람 이메일로
+    dispatch(ringAlarm({ email, alarm }));
     dispatch(topRated());
     dispatch(now());
     dispatch(upcoming());
-  }, []);
+  }, [email, alarm]);
 
   const enterMovies = (e) => {
     if (e.key === "Enter") {
@@ -45,46 +49,8 @@ export default function Home() {
     router.push(route);
   };
 
-  // 특정 범위 랜덤 숫자
-  const random = Math.floor(Math.random() * 20);
-
   return (
     <div className={styles.homeContainer}>
-      {/* 배경 */}
-      <div
-        style={
-          {
-            // display: "flex",
-            // position: "fixed",
-            // zIndex: -99,
-            // width: "100%",
-            // height: "100%",
-            // backgroundColor: 0.5,
-            // backdropFilter: blur()
-          }
-        }
-        className={styles.back}
-      >
-        <img
-          src={`https://image.tmdb.org/t/p/original${
-            topRatedList[Math.floor(Math.random() * 20)].poster_path
-          }`}
-          alt="image"
-        />
-        <img
-          src={`https://image.tmdb.org/t/p/original${
-            topRatedList[Math.floor(Math.random() * 20)].poster_path
-          }`}
-          alt="image"
-        />
-        <img
-          src={`https://image.tmdb.org/t/p/original${
-            topRatedList[Math.floor(Math.random() * 20)].poster_path
-          }`}
-          alt="image"
-        />
-      </div>
-
       {/* 모바일 로그인&회원가입 */}
       {!email ? (
         <div className={styles.mobileLogInSignUp}>
@@ -115,7 +81,7 @@ export default function Home() {
       {/* 무비차트 & 개봉 예정작 */}
       <div style={{ display: "flex" }}>
         {/* 명작 */}
-        <HomeMovie type={"인기작"} list={topRatedList} />
+        <HomeMovie type={"인기작"} list={popularList} />
 
         {/* 현재 상영작 */}
         <HomeMovie type={"현재 상영작"} list={nowList} />

@@ -21,6 +21,7 @@
   font-size: 30px;
 }
 .searchInputContainer {
+  font-family: "Cute Font", cursive;
   margin: 70px auto 0;
   width: 300px;
   /* border: 1px solid red; */

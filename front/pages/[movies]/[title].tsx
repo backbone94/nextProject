@@ -23,6 +23,8 @@ const MoviePage = () => {
   );
   const postList = useSelector((state: RootState) => state.blog.postList);
 
+  console.log("개봉날짜 ", movie.Released);
+
   // 첫 방문 또는 뒤로 가기로 방문하는 경우
   useEffect(() => {
     dispatch(clickMovie(title));
@@ -35,6 +37,11 @@ const MoviePage = () => {
   ) : Title ? (
     // 영화 상세 정보 페이지
     <div className={styles.moviePageContainer}>
+      {/* 배경 */}
+      {/* <div className={styles.back}>
+        <img className={styles.img} src={"/joker.jpg"} alt="image" />
+      </div> */}
+
       {/* 최근 클릭한 영화 리스트 */}
       {visitedMovies.length ? <VisitedMovies /> : null}
 

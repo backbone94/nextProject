@@ -109,6 +109,33 @@ export const userLike = createAsyncThunk(
   }
 );
 
+// 개봉 알람 설정
+export const setAlarm = createAsyncThunk(
+  "user/setAlarm",
+  async (object: { email: string; title: string; releaseDate: string }) => {
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.post(`http://localhost:7000/api/user/alarm`, {
+      object,
+      headers: { Authorization: token },
+    });
+    console.log("알람 설정 결과: ", res.data);
+    return res.data;
+  }
+);
+
+// 개봉 알람 취소
+export const cancelAlarm = createAsyncThunk(
+  "user/cancelAlarm",
+  async (object: { email: string; title: string; releaseDate: string }) => {
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.delete(`http://localhost:7000/api/user/alarm`, {
+      data: { object, headers: { Authorization: token } },
+    });
+    console.log("알람 취소 결과: ", res.data);
+    return res.data;
+  }
+);
+
 const initialState: User = {
   _id: "",
   email: "",
@@ -117,6 +144,8 @@ const initialState: User = {
   nickName: "",
   introduce: "",
   likeComments: [],
+  alarm: [],
+  alarmState: false,
 };
 
 export const userReducer = createSlice({
@@ -127,6 +156,16 @@ export const userReducer = createSlice({
     logOut: (state) => {
       message.success("로그아웃 하였습니다.");
       return { ...initialState, error: "" };
+    },
+
+    // 알림 설정 여부 체크
+    alarm: (state, { payload }) => {
+      const existAlarm = state.alarm.find(
+        (a: { title }) => a.title === payload
+      );
+
+      if (existAlarm) state.alarmState = true;
+      else state.alarmState = false;
     },
   },
   extraReducers: (builder) => {
@@ -193,6 +232,16 @@ export const userReducer = createSlice({
       })
       .addCase(userLike.fulfilled, (state, { payload }) => {
         state.likeComments = payload.likeComments;
+      })
+      // 알람 설정
+      .addCase(setAlarm.fulfilled, (state, { payload }) => {
+        state.alarm = payload.alarm;
+      }) //알람 취소
+      .addCase(cancelAlarm.fulfilled, (state, { payload }) => {
+        // state.alarm = state.alarm.filter((a: {title, releaseDate}) => a.title !== payload)
+        state.alarm.forEach((a: { title; releaseDate }, index) => {
+          if (a.title === payload) state.alarm.splice(index, 1);
+        });
       });
   },
 });

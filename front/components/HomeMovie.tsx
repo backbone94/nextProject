@@ -1,12 +1,20 @@
 import styles from "../styles/homeMovie.module.css";
 import { Row, Col, Button } from "antd";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const HomeMovie = ({ type, list }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
+  // 선택한 영화의 상세 페이지로 이동
   const moveToDetail = (title: string, year: string) => {
     router.push({ pathname: "/homeMovie", query: { title, year } });
+  };
+
+  // 더보기 버튼 클릭
+  const enterMovies = () => {
+    router.push(`/homeMovie/${type}`);
   };
 
   return (
@@ -41,7 +49,9 @@ const HomeMovie = ({ type, list }) => {
         </Row>
       </div>
       <div className={styles.viewMore}>
-        <Button className={styles.button}>More</Button>
+        <Button onClick={enterMovies} className={styles.button}>
+          More
+        </Button>
       </div>
     </div>
   );

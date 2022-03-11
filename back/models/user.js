@@ -27,6 +27,12 @@ const UserSchema = new mongoose.Schema({
       ref: "comment",
     },
   ],
+  alarm: [
+    {
+      title: String,
+      releaseDate: String,
+    },
+  ],
   role: {
     type: String,
     default: "user",

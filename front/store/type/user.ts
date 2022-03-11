@@ -6,4 +6,6 @@ export interface User {
   nickName: string;
   introduce: string;
   likeComments: [];
+  alarm: [];
+  alarmState: boolean;
 }

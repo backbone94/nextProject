@@ -22,6 +22,8 @@ const SignUp = () => {
     nickName: "",
     introduce: "",
     likeComments: [],
+    alarm: [],
+    alarmState: false,
   });
   const [img, setImg] = useState("");
   const [verifyNum, setVerifyNum] = useState();

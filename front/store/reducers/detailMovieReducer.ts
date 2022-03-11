@@ -55,6 +55,20 @@ export const tmdbMovie = createAsyncThunk(
   }
 );
 
+// 개봉 알람 메일 보내기
+export const ringAlarm = createAsyncThunk(
+  "detailMovie/ringAlarm",
+  async (object: { email: string; alarm: [] }) => {
+    let token = localStorage.getItem("token") || "";
+    const res = await axios.post(`http://localhost:7000/api/email/alarm`, {
+      object,
+      headers: { Authorization: token },
+    });
+    console.log("알람 울림 결과: ", res.data);
+    return res.data;
+  }
+);
+
 const initialState = {
   Actors: "",
   Director: "",
