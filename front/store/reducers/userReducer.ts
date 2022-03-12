@@ -114,7 +114,7 @@ export const setAlarm = createAsyncThunk(
   "user/setAlarm",
   async (object: { email: string; title: string; releaseDate: string }) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.post(`http://localhost:7000/api/user/alarm`, {
+    const res = await axios.post(`http://3.34.156.241/api/user/alarm`, {
       object,
       headers: { Authorization: token },
     });
@@ -128,7 +128,7 @@ export const cancelAlarm = createAsyncThunk(
   "user/cancelAlarm",
   async (object: { email: string; title: string; releaseDate: string }) => {
     let token = localStorage.getItem("token") || "";
-    const res = await axios.delete(`http://localhost:7000/api/user/alarm`, {
+    const res = await axios.delete(`http://3.34.156.241/api/user/alarm`, {
       data: { object, headers: { Authorization: token } },
     });
     console.log("알람 취소 결과: ", res.data);
