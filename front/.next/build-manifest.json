@@ -5,9 +5,9 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/7d_kb5Xv7Oi1rZH6L32E6/_buildManifest.js",
-    "static/7d_kb5Xv7Oi1rZH6L32E6/_ssgManifest.js",
-    "static/7d_kb5Xv7Oi1rZH6L32E6/_middlewareManifest.js"
+    "static/QQ7Vdt-Qe8fRmn5cpDbeg/_buildManifest.js",
+    "static/QQ7Vdt-Qe8fRmn5cpDbeg/_ssgManifest.js",
+    "static/QQ7Vdt-Qe8fRmn5cpDbeg/_middlewareManifest.js"
   ],
   "pages": {
     "/": [
@@ -41,7 +41,7 @@
       "static/chunks/82-a7630a62c6067b1d.js",
       "static/chunks/790-3867a4bb17e8e5c6.js",
       "static/css/c2a5825544be8717.css",
-      "static/chunks/pages/Profile-c195068949e91115.js"
+      "static/chunks/pages/Profile-2980952bf3449c43.js"
     ],
     "/SignUp": [
       "static/chunks/webpack-4b457281322b5474.js",
@@ -50,7 +50,7 @@
       "static/chunks/82-a7630a62c6067b1d.js",
       "static/chunks/767-4f2e31b3d8ed5bf5.js",
       "static/css/c4ad6c2857ee14b4.css",
-      "static/chunks/pages/SignUp-b5890cf7e2b64b7d.js"
+      "static/chunks/pages/SignUp-87f1c1fd95062478.js"
     ],
     "/[movies]": [
       "static/chunks/webpack-4b457281322b5474.js",
@@ -79,7 +79,7 @@
       "static/chunks/framework-bb5c596eafb42b22.js",
       "static/chunks/main-914fbfab4f90b52f.js",
       "static/css/55b6a44963665553.css",
-      "static/chunks/pages/_app-2b056daf89b27fb2.js"
+      "static/chunks/pages/_app-2bfefb372b7ab2af.js"
     ],
     "/_error": [
       "static/chunks/webpack-4b457281322b5474.js",

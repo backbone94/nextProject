@@ -6,7 +6,7 @@ import { message } from "antd";
 export const searchblog = createAsyncThunk(
   "blog/search",
   async (title: string | string[]) => {
-    const res = await axios.get("http://localhost:7000/api/naverBlog", {
+    const res = await axios.get("http://3.34.156.241/api/naverBlog", {
       params: { title: title },
     });
     console.log("블로그 검색 결과: ", res.data);

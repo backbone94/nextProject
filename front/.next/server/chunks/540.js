@@ -55,7 +55,7 @@ const tmdbMovie = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncTh
 // 개봉 알람 메일 보내기
 const ringAlarm = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("detailMovie/ringAlarm", async (object)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`http://localhost:7000/api/email/alarm`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`http://3.34.156.241/api/email/alarm`, {
         object,
         headers: {
             Authorization: token

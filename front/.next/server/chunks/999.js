@@ -43,7 +43,7 @@ const requestImg = async (e)=>{
     try {
         const formData = new FormData();
         formData.append("upload", e.target.files[0]);
-        const result = await external_axios_default().post(`${"http://localhost:7000"}/api/image`, formData);
+        const result = await external_axios_default().post(`${"http://3.34.156.241/"}/api/image`, formData);
         return result.data.url[0];
     } catch (e1) {
         console.log(e1);
