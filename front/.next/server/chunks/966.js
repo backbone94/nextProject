@@ -103,7 +103,7 @@ const userLike = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThu
 // 개봉 알람 설정
 const setAlarm = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/setAlarm", async (object)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`http://localhost:7000/api/user/alarm`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`http://3.34.156.241/api/user/alarm`, {
         object,
         headers: {
             Authorization: token
@@ -115,7 +115,7 @@ const setAlarm = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThu
 // 개봉 알람 취소
 const cancelAlarm = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/cancelAlarm", async (object)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`http://localhost:7000/api/user/alarm`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`http://3.34.156.241/api/user/alarm`, {
         data: {
             object,
             headers: {
