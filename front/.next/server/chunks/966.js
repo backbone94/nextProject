@@ -30,7 +30,7 @@ exports.modules = {
 // 토큰 유효성 검증
 const tokenCheck = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/verify", async ()=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/user/token`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/user/token`, {
         headers: {
             Authorization: token
         }
@@ -41,14 +41,14 @@ const tokenCheck = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
 // 회원가입
 const addUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/addUser", async (user)=>{
     if (!user.profile) user.profile = "/defaultImage.png";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/user/signUp`, user);
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/user/signUp`, user);
     console.log("회원가입 결과: ", res.data);
     if (res.data.token) localStorage.setItem("token", res.data.token);
     return res.data.newUser;
 });
 // 로그인
 const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/getUser", async (user)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/user/logIn`, user);
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/user/logIn`, user);
     console.log("회원 정보 불러오기 결과: ", res.data);
     if (res.data.token) localStorage.setItem("token", res.data.token);
     if (res.data.error) return res.data;
@@ -56,7 +56,7 @@ const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThun
 });
 // 회원 탈퇴
 const withdrawal = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/withdrawal", async (email, api)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`${"http://3.34.156.241/"}/api/user`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`${"http://3.34.156.241"}/api/user`, {
         data: {
             email
         }
@@ -67,7 +67,7 @@ const withdrawal = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
 // 이미지 & 닉네임 & 자기소개 변경
 const changeNickOrIntro = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/changeNickOrIntro", async (user)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/user/changeNickOrIntro`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/user/changeNickOrIntro`, {
         user,
         headers: {
             Authorization: token
@@ -79,7 +79,7 @@ const changeNickOrIntro = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.creat
 // 비밀번호 변경
 const changePw = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/changePw", async (user)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`${"http://3.34.156.241/"}/api/user/changePw`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`${"http://3.34.156.241"}/api/user/changePw`, {
         user,
         headers: {
             Authorization: token
@@ -91,7 +91,7 @@ const changePw = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThu
 // 좋아요 누른 유저 정보 업데이트
 const userLike = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("user/userLike", async (userLike1)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/user/userLike`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/user/userLike`, {
         userLike: userLike1,
         headers: {
             Authorization: token

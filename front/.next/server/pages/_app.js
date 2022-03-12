@@ -390,7 +390,7 @@ function MyApp({ Component , pageProps: { ...pageProps }  }) {
 
 // 이메일 인증
 const emailVerify = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("email/emailVerify", async (email)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/email`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/email`, {
         email
     });
     console.log("이메일 인증 결과: ", res.data);

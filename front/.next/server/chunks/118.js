@@ -65,7 +65,7 @@ const blogReducer = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice
 
 // 리뷰 불러오기
 const getCommentList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("comment/getCommentList", async (movie)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${"http://3.34.156.241/"}/api/comment`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${"http://3.34.156.241"}/api/comment`, {
         params: {
             movie: movie
         }
@@ -76,7 +76,7 @@ const getCommentList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
 // 리뷰 쓰기
 const addComment = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("comment/addComment", async (comment)=>{
     let token = localStorage.getItem("token") || "";
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/comment`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/comment`, {
         comment,
         headers: {
             Authorization: token
@@ -87,13 +87,13 @@ const addComment = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
 });
 // 좋아요 수 변경
 const commentLike = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("comment/commentLike", async (like)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241/"}/api/comment/commentLike`, like);
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`${"http://3.34.156.241"}/api/comment/commentLike`, like);
     console.log("좋아요 수 변경 결과: ", res.data);
     return res.data;
 });
 // 리뷰 삭제
 const removeComment = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("comment/removeComment", async (comment)=>{
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`${"http://3.34.156.241/"}/api/comment/removeComment`, {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`${"http://3.34.156.241"}/api/comment/removeComment`, {
         data: {
             comment: comment
         }
